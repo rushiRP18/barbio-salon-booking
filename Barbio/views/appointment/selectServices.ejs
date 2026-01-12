@@ -1,0 +1,23 @@
+<% layout("layouts/boilerplate") -%>
+
+<h2>Select Services at <%= shop.name %></h2>
+
+<form action="/shops/<%= shop._id %>/book/services" method="POST">
+    <label>Select Services:</label><br>
+    <% shop.services.forEach(service => { %>
+        <input type="checkbox" name="appointment[services]" value="<%= service.name %>">
+        <%= service.name %> - <%= service.duration %> min - ₹<%= service.price %><br>
+    <% }) %>
+
+    <br>
+    <button type="submit"> Check Availability </button>
+</form>
+
+<script>
+    document.querySelector("form").addEventListener("submit", function(e) {
+        if (!document.querySelector('input[name="appointment[services]"]:checked')) {
+            alert("Please select at least one service.");
+            e.preventDefault();
+        }
+    });
+</script>

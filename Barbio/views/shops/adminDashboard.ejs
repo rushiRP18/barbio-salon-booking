@@ -1,0 +1,71 @@
+<% layout("layouts/boilerplate") -%>
+<h2 class="mb-3">Your Shop Bookings</h2>
+
+<% if (appointments.length === 0) { %>
+  <p>No bookings yet.</p>
+<% } else { %>
+  <table border="1" cellspacing="0" cellpadding="8">
+    <thead>
+      <tr>
+        <th>Customer Name</th>
+        <th>Contact</th>
+        <th>Shop Name</th>
+        <th>Services</th>
+        <th>Total Amount</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% appointments.forEach(app => { %>
+        <tr>
+          <!-- Customer -->
+          <td><%= app.customerName %></td>
+          <td><%= app.customer.contactNo %></td>
+
+          <!-- Shop -->
+          <td><%= app.shopName %></td>
+
+          <!-- Services -->
+          <td>
+            <% if (Array.isArray(app.services) && app.services.length > 0) { %>
+              <% app.services.forEach(s => { %>
+                <%= s.name %> (₹<%= s.price %>)<br>
+              <% }) %>
+            <% } else { %>
+              N/A
+            <% } %>
+          </td>
+
+          <!-- Total Amount -->
+          <td>₹<%= app.totalPrice %></td>
+
+          <!-- Date -->
+          <td><%= app.date %></td>
+
+          <!-- Time -->
+          <td><%= app.time %></td>
+
+          <!-- Status -->
+          <td>
+            <form action="/admin/orders/<%= app.id %>/status" method="POST">
+              <select name="status" onchange="this.form.submit()">
+                <option disabled selected><%= app.status %></option>
+                <option value="confirmed">Confirmed</option>
+                <option value="completed">Completed</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        subscribeToPush();
+    });
+</script>

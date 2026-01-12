@@ -1,0 +1,111 @@
+<% layout("layouts/boilerplate") -%>
+
+<h2>Check Availability at <%= shop.name %></h2>
+
+<form action="/shops/<%= shop._id %>/book/availability" method="POST" id="availability-form">
+    <label for="appointment-date">Select Date:</label>
+    <input type="date" name="appointment[date]" id="appointment-date" required><br><br>
+
+    <label>Select Time Slot:</label>
+    <div id="slots-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
+    <input type="hidden" name="appointment[slot]" id="selected-slot" required>
+
+    <br>
+    <button type="submit">Next → Confirm Booking</button>
+</form>
+
+<script>
+    const shopData = {
+        dailySlots: <%- JSON.stringify(shop.dailySlots) %>,
+        opensAt: <%= shop.timing.opensAt %>,
+        closesAt: <%= shop.timing.closesAt %>,
+        chairs: <%= shop.chairs %>
+    };
+
+    const selectedServices = <%- JSON.stringify(selectedServices) %>;
+    const totalAppointmentTime = selectedServices.reduce((sum, service) => sum + service.duration, 0);
+    const requiredSlots = Math.ceil(totalAppointmentTime / 15);
+
+    function checkConsecutiveAvailability(slots, startSlot, requiredSlots) {
+        for (let chair = 0; chair < slots.length; chair++) {
+            for (let subSlot = startSlot; subSlot < startSlot + 4; subSlot++) {
+                if (subSlot + requiredSlots > slots[chair].length) break;
+                
+                let allFree = true;
+                for (let s = subSlot; s < subSlot + requiredSlots; s++) {
+                    if (slots[chair][s] === 1) {
+                        allFree = false;
+                        break;
+                    }
+                }
+                
+                if (allFree) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    function displaySlots(selectedDate) {
+        const normDate = new Date(selectedDate).toISOString().split("T")[0];
+        const slotsContainer = document.getElementById('slots-container');
+        const selectedSlotInput = document.getElementById('selected-slot');
+        slotsContainer.innerHTML = '';
+        selectedSlotInput.value = '';
+
+        let daily = shopData.dailySlots.find(ds => ds.date === normDate);
+        let slots = daily ? daily.slots : new Array(shopData.chairs).fill().map(() =>
+            new Array(Math.floor((shopData.closesAt - shopData.opensAt) * 4)).fill(0)
+        );
+
+        const today = new Date().toISOString().split('T')[0];
+        const now = new Date();
+
+        for (let hour = shopData.opensAt; hour < shopData.closesAt; hour++) {
+            const startSlot = (hour - shopData.opensAt) * 4;
+
+            // Check if this hour is in the past
+            const dateObj = new Date(selectedDate);
+            dateObj.setHours(hour, 0, 0, 0);
+            const isPast = dateObj < now;
+
+            const isHourAvailable = !isPast && checkConsecutiveAvailability(slots, startSlot, requiredSlots);
+
+            const slotBox = document.createElement('div');
+            slotBox.style.width = '100px';
+            slotBox.style.height = '40px';
+            slotBox.style.lineHeight = '40px';
+            slotBox.style.textAlign = 'center';
+            slotBox.style.border = '1px solid #ccc';
+            slotBox.style.cursor = isHourAvailable ? 'pointer' : 'not-allowed';
+            slotBox.style.backgroundColor = isHourAvailable ? '#28a745' : '#6c757d';
+            slotBox.style.color = '#fff';
+            slotBox.textContent = `${hour}:00 - ${hour + 1}:00`;
+
+            if (isHourAvailable) {
+                slotBox.addEventListener('click', () => {
+                    document.querySelectorAll('#slots-container div').forEach(div => {
+                        div.style.border = '1px solid #ccc';
+                        div.style.opacity = '0.7';
+                    });
+                    slotBox.style.border = '2px solid #007bff';
+                    slotBox.style.opacity = '1';
+                    selectedSlotInput.value = `${hour},${hour + 1}`;
+                });
+            }
+
+            slotsContainer.appendChild(slotBox);
+        }
+    }
+
+    document.getElementById('appointment-date').addEventListener('change', function() {
+        const selectedDate = this.value;
+        if (selectedDate) displaySlots(selectedDate);
+    });
+
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('appointment-date').min = today;
+    document.getElementById('appointment-date').value = today;
+    displaySlots(today);
+</script>

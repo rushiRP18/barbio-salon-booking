@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/"><i class="fa-solid fa-compass"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link" aria-current="page" href="/">Home</a>
+
+        <% if (currUser && currUser.role === "shopkeeper") { %>
+          <!-- Shopkeeper only -->
+          <a class="nav-link" href="/admin/shops">My Shops</a>
+          <a class="nav-link" href="/admin/new">Add New Shop</a>
+          <a class="nav-link" href="/admin/orders">Dashboard</a>
+        <% } %>
+
+        <% if (currUser && currUser.role === "user") { %>
+          <!-- Normal user only -->
+          <a class="nav-link" href="/shops">Browse Shops</a>
+          <a class="nav-link" href="/user/appointments">My Orders</a>
+        <% } %>
+      </div>
+
+      <div class="navbar-nav ms-auto">
+        <% if (!currUser) { %>
+          <a class="nav-link" aria-current="page" href="/login">Login</a>
+          <a class="nav-link" href="/signup">Sign-Up</a>
+        <% } else { %>
+          <span class="nav-link disabled">Welcome, <%= currUser.username %></span>
+          <a class="nav-link" href="/logout">Logout</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,148 @@
+<% layout("layouts/boilerplate") -%>
+  <body>
+    <h3>
+      <%= shop.name %>
+    </h3>
+    <h3>Services</h3>
+    <ul>
+      <% if (shop.services && shop.services.length> 0) { %>
+        <% for (let i=0; i < shop.services.length; i++) { %>
+          <li>
+            Name: <%= shop.services[i].name %>,
+              Price: <%= shop.services[i].price %>
+          </li>
+          <% } %>
+            <% } else { %>
+              <li>No services available</li>
+              <% } %>
+    </ul>
+    <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
+
+    <p>Address: <%= shop.address %>
+    </p>
+
+    <div>
+      <h4>Timing</h4>
+      <span>Opens @ <%= shop.timing.opensAt %></span>
+      <span>Closes @ <%= shop.timing.closesAt %></span>
+    </div>
+
+    <% if (currUser && currUser.role=='user' ) { %>
+      <a href="/shops/<%= shop._id %>/book/services">Book</a>
+      <% } %>
+
+        <% if (currUser && currUser._id.equals(shop.owner._id)) { %>
+          <p>Number of Seats: <%= shop.chairs %>
+          </p>
+          <a href="/admin/<%= shop._id %>/edit">Edit</a>
+          <form id="addShopForm" method="POST" action="/admin/shops/<%= shop._id %>?_method=DELETE">
+            <button onclick="delShop()">Delete</button>
+          </form>
+          <% } %>
+
+            <!-- Inline Map -->
+            <h4 class="mt-4">Shop Location</h4>
+            <div id="shopMap" style="height: 300px; border-radius: 8px; border: 1px solid #ccc;"></div>
+
+            <!-- Reviews -->
+            <div class="col-8 offset-3 mb-3">
+              <hr />
+
+              <% if(currUser && currUser.role=='user') {%>
+                <h4>Leave a Review</h4>
+                <form action="/shops/<%= shop._id %>/reviews" method="POST" novalidate class="needs-validation">
+                  <!-- <div class="mb-3 mt-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <input type="range" min="1" max="5" id="rating" name="review[rating]"
+                                    class="form-range">
+                            </div> -->
+                  <div class="mb-3 mt-3">
+                    <label for="rating" class="form-label">Rating</label>
+                    <fieldset class="starability-slot">
+
+                      <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
+                        aria-label="No rating." />
+                      <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                      <label for="first-rate1" title="Terrible">1 star</label>
+                      <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                      <label for="first-rate2" title="Not good">2 stars</label>
+                      <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                      <label for="first-rate3" title="Average">3 stars</label>
+                      <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                      <label for="first-rate4" title="Very good">4 stars</label>
+                      <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                      <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                  </div>
+                  <div class="mb-3 mt-3">
+                    <label for="comment" class="form-label">Comments</label>
+                    <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control"
+                      required></textarea>
+                    <div class="invalid-feedback">
+                      Please add some comments for review
+                    </div>
+                  </div>
+                  <button class="btn-outline-dark">Submit</button>
+                </form>
+                <hr />
+                <% } %>
+                <p>Customer Insights</p>
+                <p><%= summary %></p>
+                  <p> <b>All Reviews</b></p>
+                  <div class="row">
+                    <% for(review of shop.reviews){ %>
+                      <div class="card col-5 ms-3 mb-3">
+                        <div class="card-body">
+                          <h5 class="card-title">@<%= review.author.username %>
+                          </h5>
+                          <p class="card-text">
+                            <%= review.comment %>
+                          </p>
+                          <p class="starability-result card-text" data-rating="<%= review.rating %>">
+                            <%= review.rating %>
+                          </p>
+                           <% if (currUser && currUser._id.equals(review.author._id)) { %>
+                          <form action="/shops/<%= shop._id  %>/reviews/<%= review._id  %>?_method=DELETE"
+                            method="POST">
+                            <button class="btn btn-sm btn-dark">Delete</button>
+                          </form>
+                          <% } %>
+                        </div>
+                      </div>
+                      <% } %>
+                  </div>
+            </div>
+
+
+            
+            <!-- Leaflet CSS & JS -->
+            <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const shopCoords = <%- JSON.stringify(shop.location && shop.location.coordinates ? shop.location.coordinates : null) %>;
+                if (shopCoords && shopCoords.length === 2) {
+                  const lng = shopCoords[0];
+                  const lat = shopCoords[1];
+
+                  const map = L.map("shopMap").setView([lat, lng], 15);
+
+                  // Add OSM tiles
+                  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+                  }).addTo(map);
+
+                  // Marker
+                  L.marker([lat, lng])
+                    .addTo(map)
+                    .bindPopup("<b><%= shop.name %></b><br><%= shop.address %>")
+                    .openPopup();
+                } else {
+                  document.getElementById("shopMap").innerHTML =
+                    "<p class='text-muted text-center'>Location not available</p>";
+                }
+              });
+            </script>
+  </body>

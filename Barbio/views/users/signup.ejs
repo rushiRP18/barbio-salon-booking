@@ -1,0 +1,20 @@
+<% layout("layouts/boilerplate") -%>
+    <h2>SignUp</h2>
+    <form action="/signup" method="POST">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" required>
+        <label for="email">E-mail</label>
+        <input type="email" name="email" id="email" required>
+        <label for="contactNo">Contact</label>
+        <input type="number" name="contactNo" id="contactNo" required>
+        <label for="password">Password</label>
+        <input type="text" name="password" id="password" required>
+        <label for="role">Role</label>
+        <select name="role" id="role" required>
+            <option value="">-- Select Role --</option>
+            <option value="user">User</option>
+            <option value="shopkeeper">Shopkeeper</option>
+        </select>
+
+        <button>SignUp</button>
+    </form>
