@@ -1,9 +1,29 @@
 <% layout("layouts/boilerplate") -%>
-  <body>
-    <h3>
-      <%= shop.name %>
-    </h3>
+<div class="shp-container">
+  <div class="shp-container-top">
+    <div class="shp-top-content">
+      <h3><%= shop.name %></h3>
+    <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
+    <p  class="add"><i class="fa-solid fa-shop"></i><%= shop.address %>
+    </div>
+  </div>
+  <div class="shp-top-bar">
+    <div class="shp-btn">
+       <% if (currUser && currUser.role=='user' ) { %>
+      <a href="/shops/<%= shop._id %>/book/services">Book Now</a>
+      <% } %>
+    </div>
+    <div class="timings">
+      <div class="timing-head">Timing</div>
+      <div class="timing-seprator"></div>
+      <div class="timings-value"> <p class="time-title">Opens</p> <p class="time-val"><%= shop.timing.opensAt %></p></div>
+      <div class="timing-seprator"></div>
+      <div class="timings-value"> <p class="time-title">Closes</p>  <p class="time-val"><%= shop.timing.closesAt %></p></div>
+    </div>
+  </div>
+    
     <h3>Services</h3>
+    
     <ul>
       <% if (shop.services && shop.services.length> 0) { %>
         <% for (let i=0; i < shop.services.length; i++) { %>
@@ -16,20 +36,12 @@
               <li>No services available</li>
               <% } %>
     </ul>
-    <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
 
-    <p>Address: <%= shop.address %>
-    </p>
 
     <div>
-      <h4>Timing</h4>
-      <span>Opens @ <%= shop.timing.opensAt %></span>
-      <span>Closes @ <%= shop.timing.closesAt %></span>
     </div>
 
-    <% if (currUser && currUser.role=='user' ) { %>
-      <a href="/shops/<%= shop._id %>/book/services">Book</a>
-      <% } %>
+   
 
         <% if (currUser && currUser._id.equals(shop.owner._id)) { %>
           <p>Number of Seats: <%= shop.chairs %>
@@ -41,23 +53,22 @@
           <% } %>
 
             <!-- Inline Map -->
-            <h4 class="mt-4">Shop Location</h4>
-            <div id="shopMap" style="height: 300px; border-radius: 8px; border: 1px solid #ccc;"></div>
+            <!-- <h4 class="mt-4">Shop Location</h4> -->
+            <div id="shopMap" ></div>
 
             <!-- Reviews -->
-            <div class="col-8 offset-3 mb-3">
-              <hr />
+            <div>
 
+              <div class="review-section">
               <% if(currUser && currUser.role=='user') {%>
-                <h4>Leave a Review</h4>
-                <form action="/shops/<%= shop._id %>/reviews" method="POST" novalidate class="needs-validation">
+                <h2>Leave a Review</h2>
+                <form action="/shops/<%= shop._id %>/reviews" method="POST" validate class="needs-validation">
                   <!-- <div class="mb-3 mt-3">
                                 <label for="rating" class="form-label">Rating</label>
                                 <input type="range" min="1" max="5" id="rating" name="review[rating]"
                                     class="form-range">
                             </div> -->
-                  <div class="mb-3 mt-3">
-                    <label for="rating" class="form-label">Rating</label>
+                  <div>
                     <fieldset class="starability-slot">
 
                       <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
@@ -74,45 +85,53 @@
                       <label for="first-rate5" title="Amazing">5 stars</label>
                     </fieldset>
                   </div>
-                  <div class="mb-3 mt-3">
-                    <label for="comment" class="form-label">Comments</label>
-                    <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control"
+                  <div class="review-textarea">
+                    <textarea name="review[comment]" id="comment" cols="80" rows="4" class="form-control"
                       required></textarea>
-                    <div class="invalid-feedback">
-                      Please add some comments for review
-                    </div>
                   </div>
-                  <button class="btn-outline-dark">Submit</button>
+                  <div class="review-btn">
+                    <button>Submit</button>
+                  </div>
                 </form>
-                <hr />
+                
                 <% } %>
-                <p>Customer Insights</p>
-                <p><%= summary %></p>
-                  <p> <b>All Reviews</b></p>
-                  <div class="row">
+                </div>
+                
+                <div class="customer-insights">
+                  <h2>Customer Insights</h2>
+                  <p><%= summary %></p>
+                </div>
+                  <div class="all-reviews">
+                    <h2>What our customer say's</h2>
+                      <div class="review-grid">
                     <% for(review of shop.reviews){ %>
-                      <div class="card col-5 ms-3 mb-3">
-                        <div class="card-body">
-                          <h5 class="card-title">@<%= review.author.username %>
-                          </h5>
-                          <p class="card-text">
-                            <%= review.comment %>
-                          </p>
+                      
+                        <div class="review-card">
+                          
                           <p class="starability-result card-text" data-rating="<%= review.rating %>">
                             <%= review.rating %>
                           </p>
-                           <% if (currUser && currUser._id.equals(review.author._id)) { %>
+                          <p><%= review.comment %></p>
+                          <div class="review-bottom">
+                            <h5>-<%= review.author.username %></h5>
+                            <% if (currUser && currUser._id.equals(review.author._id)) { %>
                           <form action="/shops/<%= shop._id  %>/reviews/<%= review._id  %>?_method=DELETE"
                             method="POST">
-                            <button class="btn btn-sm btn-dark">Delete</button>
+                            <button >Delete</button>
                           </form>
                           <% } %>
+                          </div>
+                          
+                           
                         </div>
-                      </div>
+                      
                       <% } %>
                   </div>
+                  </div>
+                 
             </div>
 
+</div>
 
             
             <!-- Leaflet CSS & JS -->
@@ -145,4 +164,3 @@
                 }
               });
             </script>
-  </body>

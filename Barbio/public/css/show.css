@@ -1,0 +1,236 @@
+.shp-container{
+  background-color: #1E1E1E;
+  color: white;
+  padding-bottom: 3rem;
+}
+.shp-container-top{
+  height: 55vh;
+  background-image: url("/Assets/shp_bg1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  background-color: black;
+}
+.shp-top-content{
+  position: relative;
+  top: 65%;
+  margin-left: 2rem;
+}
+.shp-top-content p{
+  color: rgba(255, 255, 255, 0.815);
+}
+.add{
+  margin-top: 8px;
+}
+.add i{
+  margin-right: 5px;
+}
+.shp-top-content h3{
+  font-size: 2.5rem;
+}
+.shp-top-bar {
+  display: flex;
+   position: relative;
+  align-items: center;
+  color: #fff;
+  margin: 2rem;
+}
+
+/* Book button */
+.shp-btn a {
+  padding: 12px 40px;
+  border-radius: 20px;
+  background: #2a1c14;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.3rem;
+  border-radius: 40px;
+  border: 1px solid #fafafa;
+}
+.timings{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  margin: 0 auto;
+}
+.timing-seprator{
+  height: 40px;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.651);
+}
+.timing-head{
+  font-size: 1.5rem;
+}
+.timings-value{
+  text-align: center;
+  
+}
+.time-title{
+ margin-bottom: 3px;
+ color: rgba(255, 255, 255, 0.651);
+}
+.time-val{
+  font-size: 1.8rem;
+}
+
+#shopMap{
+  height: 300px;
+  margin: 1rem 0;
+}
+
+.review-section{
+  width: 70%;
+  margin: 3rem auto 1rem;
+  border: 2px solid #D6B9A6;
+  border-radius: 20px;
+  padding: 1rem;
+}
+.review-section h2{
+  font-size: 2rem;
+}
+.review-btn{
+  text-align: end;
+}
+.review-btn button {
+  font-size: 1.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 40px;
+  color: #D6B9A6;
+  background-color: #1E1E1E;
+  border: 2px solid #D6B9A6;
+  text-align: end;
+
+  /* smoother & targeted transitions */
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.review-btn button:hover {
+  cursor: pointer;
+  background-color: #D6B9A6;
+  color: #1E1E1E;
+
+  /* subtle lift */
+  transform: translateY(-2px);
+
+}
+
+.review-btn button:active {
+  /* pressed effect */
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(214, 185, 166, 0.3);
+}
+/* wrapper spacing */
+.review-textarea {
+  margin: 0rem 0;
+}
+
+/* textarea base */
+.review-textarea textarea.form-control {
+  resize: vertical;
+  min-height: 160px;
+
+  background-color: #1E1E1E;
+  color: #EDEDED;
+
+  border-radius: 14px;
+
+  padding: 1rem 1.2rem;
+  font-size: 1rem;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* placeholder (if you add one) */
+.review-textarea textarea::placeholder {
+  color: #9e9e9e;
+}
+
+/* focus state */
+.review-textarea textarea:focus {
+  outline: none;
+  background-color: #222;
+  border-color: #D6B9A6;
+  box-shadow: 0 0 0 3px rgba(214, 185, 166, 0.35);
+}
+
+/* invalid state (Bootstrap compatible) */
+.review-textarea textarea.is-invalid {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
+}
+
+/* invalid feedback text */
+.review-textarea .invalid-feedback {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  color: #e74c3c;
+}
+
+/* smooth resize handle */
+.review-textarea textarea::-webkit-resizer {
+  border-radius: 0 0 14px 0;
+}
+
+.customer-insights {
+  margin: 2.5rem 2rem;
+  padding: 1.8rem 2rem;
+
+  background: linear-gradient(
+    145deg,
+    #1e1e1e,
+    #252525
+  );
+
+  border-left: 5px solid #D6B9A6;
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.customer-insights h2 {
+  margin-bottom: 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #D6B9A6;
+}
+
+.customer-insights p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #E6E6E6;
+}
+
+/* optional subtle emphasis for key phrases */
+.customer-insights p strong {
+  color: #ffffff;
+}
+
+.all-reviews{
+  margin: 1rem 2rem;
+}
+.all-reviews h2{
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+.row{
+  display: flex;
+  gap: 2rem;
+}
+.row-item{
+  border: 2px solid wheat;
+  width: 15%;
+}

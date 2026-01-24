@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barbio</title>
+    <link rel="stylesheet" href="/css/landing.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="home">
+      <div class="overlay"></div>
+
+      <div class="content">
+        <h1>Get your fresh look today</h1>
+        <p>Find best salons near you</p>
+
+        <div class="btn-bg">
+          <a href="/signup"><button>Get Started <i class="fa-solid fa-arrow-right"></i></button></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="features">
+      <div class="feature-steps">
+        <div class="step">
+          <span class="dot"></span>
+          <p>Select your saloon</p>
+        </div>
+
+        <div class="step">
+          <span class="dot"></span>
+          <p>Choose your slot</p>
+        </div>
+
+        <div class="step">
+          <span class="dot"></span>
+          <p>Confirm your appointment</p>
+        </div>
+      </div>
+
+      <div class="f-container">
+        <h1>Skip the Queues</h1>
+        <div class="f-content">
+          <h2>Book your slot at your favorite saloon</h2>
+          <p>
+            Tired of all the waiting at your favorite saloon? <br />Not anymore,
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="features2">
+      <div class="features2-content">
+        <h1>A Growing Network of Trusted Salons</h1>
+        <p>
+          Every day, numerous salons join our platform, giving you more <br />
+          options, better availability, and seamless booking at your <br />
+          convenience.
+        </p>
+      </div>
+      <div class="features2-bottom">
+        <div class="bottom-item">
+          <img src="Assets/star.png" alt="" />
+          <p>Feature1</p>
+        </div>
+        <div class="bottom-item">
+          <img src="Assets/star.png" alt="" />
+          <p>Feature1</p>
+        </div>
+        <div class="bottom-item">
+          ~~
+          <img src="Assets/star.png" alt="" />
+          <p>Feature1</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="review">
+      <h1>What Our Users Say About Us</h1>
+
+      <div class="review-container">
+        <div class="review-item review-item-1" data-index="0">
+          <h2></h2>
+          <p class="stars"></p>
+          <p class="text"></p>
+        </div>
+
+        <div class="review-item review-item-2" data-index="1">
+          <h2></h2>
+          <p class="stars"></p>
+          <p class="text"></p>
+        </div>
+
+        <div class="review-item review-item-3" data-index="2">
+          <h2></h2>
+          <p class="stars"></p>
+          <p class="text"></p>
+        </div>
+      </div>
+      <div class="review-dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <div class="shopkeeper">
+      <div class="headings">
+        <h1>
+          Have your own saloon? <br />
+          <span>Get listed on Barbio</span>
+        </h1>
+        <div class="button">
+          <a href="/signup">
+            <button type="button">Sign up</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const steps = document.querySelectorAll(".step");
+    const features = document.querySelector(".features");
+
+    let prevActiveCount = 0;
+    let reverseTimeouts = [];
+
+    function clearReverseTimers() {
+      reverseTimeouts.forEach((t) => clearTimeout(t));
+      reverseTimeouts = [];
+    }
+
+    window.addEventListener("scroll", () => {
+      const rect = features.getBoundingClientRect();
+      const viewHeight = window.innerHeight;
+
+      const progress = Math.min(
+        Math.max((viewHeight - rect.top) / viewHeight, 0),
+        1,
+      );
+
+      const activeCount = Math.floor(progress * steps.length);
+
+      // Forward scroll (activate immediately)
+      if (activeCount > prevActiveCount) {
+        clearReverseTimers();
+        for (let i = 0; i < steps.length; i++) {
+          steps[i].classList.toggle("active", i < activeCount);
+        }
+      }
+
+      // Reverse scroll (deactivate slowly)
+      if (activeCount < prevActiveCount) {
+        clearReverseTimers();
+
+        for (let i = prevActiveCount - 1; i >= activeCount; i--) {
+          const t = setTimeout(
+            () => {
+              steps[i].classList.remove("active");
+            },
+            (prevActiveCount - 1 - i) * 900,
+          ); // 👈 slow reverse
+          reverseTimeouts.push(t);
+        }
+      }
+
+      prevActiveCount = activeCount;
+    });
+
+    ///review system
+
+    const reviews = [
+      {
+        name: "Shradha Kapoor",
+        stars: "★★★★★",
+        text: "Amazing experience. Loved the UI and smooth performance.",
+      },
+      {
+        name: "Rahul Mehta",
+        stars: "★★★★☆",
+        text: "Very helpful platform, customer support is excellent.",
+      },
+      {
+        name: "Ananya Sharma",
+        stars: "★★★★★",
+        text: "The design is beautiful and the service is top-notch.",
+      },
+      {
+        name: "Vikas Patil",
+        stars: "★★★★☆",
+        text: "Everything works smoothly, just needs minor improvements.",
+      },
+      {
+        name: "Neha Verma",
+        stars: "★★★★★",
+        text: "Highly recommended! Great attention to detail.",
+      },
+    ];
+
+    let startIndex = 0;
+    let intervalId;
+
+    const cards = document.querySelectorAll(".review-item");
+    const dots = document.querySelectorAll(".dot");
+    const container = document.querySelector(".review-container");
+
+    function updateDots(activeIndex) {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle("active", i === activeIndex);
+      });
+    }
+
+    function updateReviewsSmooth() {
+      cards.forEach((card) => card.classList.add("fade-out"));
+
+      setTimeout(() => {
+        cards.forEach((card, i) => {
+          const review = reviews[(startIndex + i) % reviews.length];
+          card.querySelector("h2").textContent = review.name;
+          card.querySelector(".stars").textContent = review.stars;
+          card.querySelector(".text").textContent = review.text;
+        });
+
+        updateDots(startIndex % dots.length);
+        startIndex = (startIndex + 1) % reviews.length;
+
+        cards.forEach((card) => card.classList.remove("fade-out"));
+      }, 600);
+    }
+
+    function startAutoplay() {
+      intervalId = setInterval(updateReviewsSmooth, 5500);
+    }
+
+    function stopAutoplay() {
+      clearInterval(intervalId);
+    }
+
+    /* Init */
+    updateReviewsSmooth();
+    startAutoplay();
+
+    /* Pause on hover */
+    container.addEventListener("mouseenter", stopAutoplay);
+    container.addEventListener("mouseleave", startAutoplay);
+  </script>
+</html>

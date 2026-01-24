@@ -146,7 +146,7 @@ cron.schedule("0 0 * * *", async () => {
 
 //root
 app.get("/", (req, res) => {
-  res.send("Hi, I am  root")
+  res.render("users/home.ejs")
 })
 
 app.use(session(sessionOptions));

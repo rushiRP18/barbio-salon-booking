@@ -4,16 +4,19 @@
         <h4>Please Login/Signup to see All listings</h4>
         <a href="/login">Login</a>
         <% } else { %>
-            <div class="container mt-4">
-                <h2 class="mb-3">All Listings</h2>
+            <div class="listing-home">
+                <div class="listing-home-top">
+                    <h1>Find your style</h1>
+                </div>
 
                 <!-- Search & Sort Controls -->
-                <div class="d-flex mb-3">
-                    <input type="text" id="searchInput" class="form-control me-2"
-                        placeholder="Search here">
-                    <button id="searchBtn" class="btn btn-primary me-2">Search</button>
-                    <button id="sortBtn" class="btn btn-secondary">Sort by Nearest</button>
+                <div class="listing-search">
+                    <input type="text" id="searchInput" class="form-input" placeholder="Search here" />
+
+                    <button id="searchBtn">Search</button>
+                    <button id="sortBtn">Sort by Nearest</button>
                 </div>
+
 
                 <!-- Loading Indicator -->
                 <div id="loading" class="text-info mb-3" style="display:none;">
@@ -21,22 +24,41 @@
                 </div>
 
                 <!-- Shops List -->
-                <div id="shopsList">
+                <div id="shopsList" class="shop-container">
                     <% for(let shop of allShops) { %>
-                        <div class="shop-card mb-3 border p-3 rounded" data-lat="<%= shop.location?.coordinates[1] %>"
+
+                        <a href="/shops/<%= shop._id %>" class="shop-card"
+                            data-lat="<%= shop.location?.coordinates[1] %>"
                             data-lng="<%= shop.location?.coordinates[0] %>" data-address="<%= shop.address %>">
-                            <h5><a href="/shops/<%= shop._id %>">
+
+                            <div class="shop-img">
+                                <img src="/Assets/shop1.png" alt="<%= shop.name %>">
+                            </div>
+
+                            <div class="shop-content">
+
+                                <!-- ⭐ Rating at top -->
+                                <div class="shop-rating">
+                                    <p class="starability-result" data-rating="<%= shop.avgRating %>"></p>
+                                   
+                                </div>
+
+                                <h5 class="shop-title">
                                     <%= shop.name %>
-                                </a></h5>
-                            <p><strong>Address:</strong>
-                                <%= shop.address %>
-                            </p>
-                            <p>
-                                <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
-                            </p>
-                        </div>
+                                </h5>
+
+                                <p class="shop-address">
+                                    <strong>Address:</strong>
+                                    <%= shop.address %>
+                                </p>
+
+                            </div>
+                        </a>
+
                         <% } %>
                 </div>
+
+
             </div>
             <% } %>
 
