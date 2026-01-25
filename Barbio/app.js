@@ -807,7 +807,7 @@ app.delete("/shops/:id/reviews/:reviewId", isLoggedIn, isReviewAuthor, async (re
   shop.avgRating = calAvg(shop);
   await shop.save();
 
-  req.flash("success", "Review Deleted!!");
+  req.flash("error", "Review Deleted!!");
   res.redirect(`/shops/${id}`);
 });
 

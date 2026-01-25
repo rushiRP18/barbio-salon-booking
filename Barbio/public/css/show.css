@@ -234,3 +234,61 @@
   border: 2px solid wheat;
   width: 15%;
 }
+.review-grid{
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}
+.review-card {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.08),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      #1f1f1f,
+      #0e0e0e
+    );
+
+  color: #eaeaea;
+  border-radius: 20px;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+
+}
+
+.review-cmt {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+.review-bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.review-bottom h5{
+  font-size: 1rem;
+  color: #838181;
+}
+.review-bottom button{
+  
+  background: linear-gradient(135deg, #8b1d1d, #4b0f0f);
+  color: #fff;
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  padding: 0.55rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 15px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  transition: all 0.25s ease;
+
+
+}

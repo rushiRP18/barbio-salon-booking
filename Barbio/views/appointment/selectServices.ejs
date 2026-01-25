@@ -1,23 +1,62 @@
 <% layout("layouts/boilerplate") -%>
 
-<h2>Select Services at <%= shop.name %></h2>
+  <div class="selectService">
+    <div class="shp-container-top">
+      <div class="shp-top-content">
+        <h3>
+          <%= shop.name %>
+        </h3>
+        <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
+        <p class="add"><i class="fa-solid fa-shop"></i>
+          <%= shop.address %>
+      </div>
+    </div>
+    <div class="ss-content">
+      <h1>Select Services</h1>
+      <div class="ss-seprator"></div>
 
-<form action="/shops/<%= shop._id %>/book/services" method="POST">
-    <label>Select Services:</label><br>
-    <% shop.services.forEach(service => { %>
-        <input type="checkbox" name="appointment[services]" value="<%= service.name %>">
-        <%= service.name %> - <%= service.duration %> min - ₹<%= service.price %><br>
-    <% }) %>
+      <form action="/shops/<%= shop._id %>/book/services" method="POST">
 
-    <br>
-    <button type="submit"> Check Availability </button>
-</form>
+        <div class="services-grid">
+          <% shop.services.forEach(service=> { %>
+            <label class="service-card">
+              <input type="checkbox" name="appointment[services]" value="<%= service.name %>" hidden>
 
-<script>
-    document.querySelector("form").addEventListener("submit", function(e) {
-        if (!document.querySelector('input[name="appointment[services]"]:checked')) {
-            alert("Please select at least one service.");
-            e.preventDefault();
-        }
+              <div class="service-info">
+                <span class="service-name">
+                  <%= service.name %>
+                </span>
+                <div class="service-meta">
+                  <span class="duration">
+                    <%= service.duration %> min
+                  </span>
+                  <span style="opacity: 0.3">|</span>
+                  <span class="price">₹<%= service.price %></span>
+                </div>
+              </div>
+
+              <div class="check-indicator">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </label>
+            <% }) %>
+        </div>
+
+        <button type="submit" class="btn-check-availability">
+          Check Availability
+        </button>
+
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+      if (!document.querySelector('input[name="appointment[services]"]:checked')) {
+        alert("Please select at least one service.");
+        e.preventDefault();
+      }
     });
-</script>
+  </script>

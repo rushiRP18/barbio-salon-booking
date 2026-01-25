@@ -111,7 +111,7 @@
                           <p class="starability-result card-text" data-rating="<%= review.rating %>">
                             <%= review.rating %>
                           </p>
-                          <p><%= review.comment %></p>
+                          <p class="review-cmt"><%= review.comment %></p>
                           <div class="review-bottom">
                             <h5>-<%= review.author.username %></h5>
                             <% if (currUser && currUser._id.equals(review.author._id)) { %>

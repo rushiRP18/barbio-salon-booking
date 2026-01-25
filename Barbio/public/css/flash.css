@@ -1,0 +1,140 @@
+/* alert container */
+.alert {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+
+  min-width: 280px;
+  max-width: 420px;
+
+  padding: 1rem 1.3rem;
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  font-size: 0.95rem;
+  line-height: 1.5;
+
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  animation: slideIn 0.35s ease forwards;
+
+  z-index: 9999;
+}
+/* --- Base Alert Styling --- */
+/* Add this class to your HTML divs if not already present: class="alert alert-success" */
+.alert {
+  position: fixed; /* Floats over content */
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  
+  min-width: 300px;
+  max-width: 450px;
+  padding: 16px 20px;
+  
+  border-radius: 12px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 
+              0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  
+  /* Start animation immediately */
+  animation: slideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+/* --- Success Theme --- */
+.alert-success {
+  /* Slightly transparent for a modern glass feel */
+  background: linear-gradient(145deg, rgba(31, 61, 43, 0.95), rgba(36, 92, 61, 0.95));
+  color: #e6fffa;
+  border-left: 6px solid #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.2); /* Subtle border for definition */
+}
+
+/* --- Error Theme --- */
+.alert-error {
+  background: linear-gradient(145deg, rgba(61, 31, 31, 0.95), rgba(92, 36, 36, 0.95));
+  color: #ffe4e6;
+  border-left: 6px solid #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+/* --- Text Content --- */
+.alert-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* --- Close Button --- */
+.alert-close {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: inherit;
+  
+  width: 24px;
+  height: 24px;
+  border-radius: 50%; /* Circle shape */
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.1rem;
+  padding: 0;
+  line-height: 0;
+}
+
+.alert-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg); /* Nice little rotation effect */
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 480px) {
+  .alert {
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    max-width: none;
+    min-width: auto;
+  }
+}
+
+/* --- Animations --- */
+.alert.hide {
+  animation: slideOut 0.4s ease forwards;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+}

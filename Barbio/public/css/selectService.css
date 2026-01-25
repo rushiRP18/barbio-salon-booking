@@ -1,0 +1,163 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.selectService{
+    background-color: #1E1E1E;
+    height: 300vh;
+    color: white;
+}
+.ss-content{
+    margin: 0 auto;
+    margin: 2rem;
+}
+
+.ss-content h1{
+    text-align: center;
+    font-size: 2.5rem;
+
+}
+.ss-seprator{
+    width: 100px;
+    background-color: #D6B9A6;
+    height: 2px;
+    margin: 8px auto;
+    margin-bottom: 30px;
+}
+.ss-content {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 20px 30px;
+  background: transparent; 
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: white;
+}
+
+.ss-content h1 {
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  font-size: 2rem;
+  color: #ffffff;
+}
+
+
+
+/* --- Service Grid --- */
+.services-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+/* --- Service Card --- */
+.service-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px;
+  
+  background: #18181b; 
+  border: 1px solid #333333;
+  border-radius: 12px;
+  
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.service-card:hover {
+  background: #202023;
+  border-color: #555;
+  transform: translateY(-2px);
+}
+
+/* --- Selected State (Using your #D6B9A6 color) --- */
+.service-card:has(input:checked) {
+  border-color: #D6B9A6; /* Matches your button border */
+  background: #1c1917;   
+  box-shadow: 0 0 15px rgba(214, 185, 166, 0.1); 
+}
+
+/* --- Text Styling --- */
+.service-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.service-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.service-meta {
+  display: flex;
+  gap: 15px;
+  font-size: 0.9rem;
+  color: #a1a1aa; 
+}
+
+.price {
+  color: #D6B9A6; /* Matches your theme */
+  font-weight: 600;
+}
+
+/* --- Custom Checkbox Circle --- */
+.check-indicator {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #525252;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.check-indicator svg {
+  width: 14px;
+  height: 14px;
+  color: #1E1E1E; /* Dark icon */
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.2s cubic-bezier(0.5, 1.5, 0.5, 1);
+}
+
+/* Checkbox Selected Animation */
+.service-card input:checked ~ .check-indicator {
+  background: #D6B9A6; /* Matches your button hover */
+  border-color: #D6B9A6;
+}
+
+.service-card input:checked ~ .check-indicator svg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --- YOUR BUTTON STYLING --- */
+.btn-check-availability {
+  width: 100%; /* Ensures it fills the width */
+  padding: 18px;
+  background: #1E1E1E; 
+  color: #ffffff;
+  border: none;
+  border-radius: 40px;
+  border: 2px solid #D6B9A6;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-check-availability:hover {
+  background: #D6B9A6;
+  color: #1E1E1E;
+  box-shadow: 0 0 20px rgba(214, 185, 166, 0.15); 
+}

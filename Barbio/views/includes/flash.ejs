@@ -1,14 +1,56 @@
-
-<% if(success && success.length >0){ %> 
-<div class="alert alert-success alert-dismissible fade show col-6 offset-6" role="alert">
-    <%= success  %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<link rel="stylesheet" href="/css/flash.css">
+<% if (success && success.length > 0) { %>
+  <div class="alert alert-success" data-alert data-once>
+    <span class="alert-text"><%= success %></span>
+    <button class="alert-close" aria-label="Close">&times;</button>
+  </div>
 <% } %>
 
-<% if(error && error.length >0){ %> 
-<div class="alert alert-danger alert-dismissible fade show col-6 offset-6" role="alert">
-    <%= error  %>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+<% if (error && error.length > 0) { %>
+  <div class="alert alert-error" data-alert>
+    <span class="alert-text"><%= error %></span>
+    <button class="alert-close" aria-label="Close">&times;</button>
+  </div>
 <% } %>
+
+
+<script>
+(function () {
+  const alerts = document.querySelectorAll("[data-alert]");
+  
+  // 1. Check if this specific history entry has already shown the flash message.
+  // This effectively detects if the user hit the "Back" button to get here.
+  const historyState = window.history.state || {};
+  if (historyState.flashWasShown) {
+      alerts.forEach(alert => alert.remove());
+      return; // Stop here, do not set up timers
+  }
+
+  // 2. If not shown yet, mark the current history state immediately.
+  // This saves a flag into the browser's history for this specific page view.
+  // When you hit "Back", this flag will still be true.
+  window.history.replaceState({ ...historyState, flashWasShown: true }, '');
+
+  if (!alerts.length) return;
+
+  alerts.forEach(alert => {
+    const closeBtn = alert.querySelector(".alert-close");
+
+    const dismiss = () => {
+      alert.classList.add("hide");
+      setTimeout(() => alert.remove(), 300);
+    };
+
+    // Auto dismiss
+    const timerId = setTimeout(dismiss, 4000);
+
+    // Manual close
+    if (closeBtn) {
+      closeBtn.addEventListener("click", () => {
+        clearTimeout(timerId);
+        dismiss();
+      });
+    }
+  });
+})();
+</script>

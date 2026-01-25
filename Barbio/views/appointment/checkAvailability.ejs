@@ -1,18 +1,37 @@
 <% layout("layouts/boilerplate") -%>
+<div class="checkAvail">
+    <div class="shp-container-top">
+    <div class="shp-top-content">
+      <h3><%= shop.name %></h3>
+    <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
+    <p  class="add"><i class="fa-solid fa-shop"></i><%= shop.address %>
+    </div>
+  </div>
 
-<h2>Check Availability at <%= shop.name %></h2>
+<div class="ca-content">
+    <h1>Check Availability</h1>
+    <div class="ca-seprator"></div>
 
-<form action="/shops/<%= shop._id %>/book/availability" method="POST" id="availability-form">
-    <label for="appointment-date">Select Date:</label>
-    <input type="date" name="appointment[date]" id="appointment-date" required><br><br>
+    <form action="/shops/<%= shop._id %>/book/availability" method="POST" id="availability-form">
+        
+        <label for="appointment-date">Select Date</label>
+        <input type="date" name="appointment[date]" id="appointment-date" class="ca-input" required>
+        
+        <br><br>
 
-    <label>Select Time Slot:</label>
-    <div id="slots-container" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"></div>
-    <input type="hidden" name="appointment[slot]" id="selected-slot" required>
+        <label>Select Time Slot</label>
+        <div id="slots-container"></div>
+        
+        <input type="hidden" name="appointment[slot]" id="selected-slot" required>
 
-    <br>
-    <button type="submit">Next → Confirm Booking</button>
-</form>
+        <br>
+
+        <button type="submit" class="btn-confirm">
+            Confirm Booking
+        </button>
+    </form>
+</div>
+</div>
 
 <script>
     const shopData = {

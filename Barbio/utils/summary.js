@@ -1,24 +1,38 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const { HfInference } = require("@huggingface/inference");
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-console.log("Loaded GEMINI_API_KEY:", process.env.GEMINI_API_KEY);
-console.log(genAI)
+const hf = new HfInference(process.env.HF_API_TOKEN);
+
 
 async function summarizeReviews(avgRating, reviews) {
   if (!reviews || reviews.length === 0) {
     return `This shop has an average rating of ${avgRating} ⭐. No reviews yet to summarize.`;
   }
 
-  const text = reviews.slice(0, 30).join("\n"); // avoid overload
+  const text = reviews.slice(0, 30).join("\n");
+
   const prompt = `
 This shop has an average rating of ${avgRating} out of 5.
-Write a very short summary (1–2 lines) of what customers are saying based on these reviews:\n\n${text}
+Write a very short summary (1–2 lines) of what customers are saying based on these reviews:
+
+${text}
 `;
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-    const result = await model.generateContent(prompt);
-    const summary = result.response.text();
+    const response = await hf.textGeneration({
+      model: "mistralai/Mixtral-8x7B-Instruct-v0.1"
+,
+      inputs: prompt,
+      parameters: {
+        max_new_tokens: 80,
+        temperature: 0.4,
+        top_p: 0.9,
+        repetition_penalty: 1.1
+      }
+    });
+
+    const summary = response.generated_text
+      .replace(prompt, "")
+      .trim();
 
     return `This shop has an average rating of ${avgRating} ⭐. ${summary}`;
   } catch (err) {
