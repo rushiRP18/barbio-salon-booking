@@ -1,0 +1,182 @@
+/* --- Wrapper to center the nav --- */
+.barbio-nav-wrapper {
+    position: fixed; /* Stick to top (or absolute if you prefer) */
+    top: 20px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    padding: 0 15px;
+}
+
+/* --- The Pill Container --- */
+.barbio-navbar {
+    background-color: #1a1512; /* Deep dark brown/black */
+    /* Optional: Glassmorphism effect if desired */
+    backdrop-filter: blur(10px);
+    
+    border-radius: 50px;
+    padding: 15px 40px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    width: auto; /* Fit content */
+    min-width: 700px; /* Minimum width for desktop */
+    max-width: 90%;
+    
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+}
+
+/* --- Brand --- */
+.barbio-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #D6B9A6; /* Gold/Beige color */
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    margin-right: 30px;
+}
+
+/* --- Menu Structure --- */
+.barbio-menu-container {
+    flex-grow: 1;
+}
+
+.barbio-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.barbio-center-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto; /* Pushes auth to right, brand to left */
+}
+
+.barbio-auth-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 20px;
+}
+
+/* --- Individual Links --- */
+/* --- Individual Links --- */
+.barbio-link {
+    color: #a1a1aa; 
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 8px 12px; /* Increased padding slightly for click area */
+    position: relative; /* Needed for the underline positioning */
+    transition: color 0.3s ease;
+}
+
+.barbio-link:hover {
+    color: #fff;
+}
+
+/* --- Active State Logic --- */
+.barbio-link.active {
+    color: #fff;
+    font-weight: 500; /* Optional: make active text slightly bolder */
+}
+
+/* The Moving Underline */
+.barbio-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; /* Raises the line slightly so it's not on the edge */
+    left: 12px;  /* Matches horizontal padding */
+    right: 12px;
+    height: 3px; /* Slightly thicker for visibility */
+    background-color: #D6B9A6; /* Using your Gold Brand Color instead of white */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(214, 185, 166, 0.4); /* Subtle glow */
+}
+
+/* Fix for the Highlight Button (Sign Up) so it doesn't get an underline */
+.barbio-link.highlight.active::after {
+    display: none; /* No underline for buttons */
+}
+
+/* User Name Text */
+.barbio-user {
+    color: #D6B9A6;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+/* Highlight Button (Sign up) */
+.barbio-link.highlight {
+    border: 1px solid #555;
+    border-radius: 20px;
+    padding: 5px 18px;
+}
+.barbio-link.highlight:hover {
+    background: #D6B9A6;
+    color: #000;
+    border-color: #D6B9A6;
+}
+
+/* --- Toggler (Hidden on Desktop) --- */
+.barbio-toggler {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 992px) {
+    .barbio-nav-wrapper {
+        top: 10px;
+    }
+
+    .barbio-navbar {
+        min-width: unset;
+        width: 95%;
+        padding: 15px 25px;
+        flex-wrap: wrap; /* Allows menu to drop down */
+    }
+
+    .barbio-toggler {
+        display: block; /* Show hamburger on mobile */
+    }
+
+    /* When the menu is collapsed (Bootstrap handles this, we style the result) */
+    .barbio-menu-container {
+        width: 100%; /* Force full width when open */
+    }
+
+    /* When Bootstrap adds the 'show' class, layout changes to column */
+    .collapse.show .barbio-menu,
+    .collapsing .barbio-menu {
+        flex-direction: column;
+        padding-top: 20px;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    .barbio-center-links,
+    .barbio-auth-links {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0;
+        width: 100%;
+        gap: 15px;
+    }
+
+    .barbio-auth-links {
+        border-top: 1px solid #333;
+        padding-top: 15px;
+        margin-top: 10px;
+    }
+}

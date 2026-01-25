@@ -1,0 +1,245 @@
+/* --- Page Wrapper --- */
+.ap-page-wrapper {
+    min-height: 100vh;
+    background-color: #101010; /* Deep black/grey base */
+    
+    /* Optional: If you have the barber pattern image, uncomment below */
+    background-image: url('/Assets/ud.png'); 
+   
+    
+    color: white;
+    font-family: 'Inter', sans-serif;
+    padding: 40px 20px;
+}
+
+.ap-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* --- Heading --- */
+.ap-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: #fff;
+}
+
+/* --- Filter Buttons (Pills) --- */
+.ap-filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.ap-filter-btn {
+    background: transparent;
+    border: 1px solid #444;
+    color: #888;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ap-filter-btn:hover {
+    border-color: #D6B9A6;
+    color: #D6B9A6;
+}
+
+.ap-filter-btn.active {
+    background-color: #D6B9A6; /* Gold Active */
+    color: #000;
+    border-color: #D6B9A6;
+    font-weight: 600;
+}
+
+/* --- Card Container --- */
+.ap-card {
+    background-color: #191919; 
+    border: 0.2px solid #D6B9A6; /* Gold Border */
+    border-radius: 20px;
+    padding: 25px 30px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Stack Top and Bottom rows */
+    gap: 15px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease;
+}
+
+.ap-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(214, 185, 166, 0.1);
+}
+
+/* --- ROW 1: Header --- */
+.ap-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.ap-service-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+.ap-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon-action {
+    color: #888;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.icon-action:hover { color: #fff; }
+
+/* Directions Button (Outline Style) */
+.ap-btn-directions {
+    background: transparent;
+    border: 1px solid #666;
+    color: #ccc;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.ap-btn-directions:hover {
+    border-color: #D6B9A6;
+    color: #D6B9A6;
+}
+
+/* --- SEPARATOR --- */
+.ap-dashed-divider {
+    width: 100%;
+    height: 1px;
+    border-top: 2.5px dashed #D6B9A6; /* The dashed line */
+    opacity: 0.6;
+}
+
+/* --- ROW 2: Body --- */
+.ap-card-body {
+    display: flex;
+    align-items: flex-start; /* Align to top of section */
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allows wrapping on mobile */
+    gap: 20px;
+}
+
+/* Column 1: Location */
+.location-col {
+    display: flex;
+    gap: 12px;
+    flex: 2;
+}
+
+.location-col .icon-wrapper {
+    margin-top: 2px;
+}
+.location-col i {
+    color: #D6B9A6; /* Gold Location Icon */
+    font-size: 1.2rem;
+}
+
+.text-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.shop-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.shop-address {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+/* Column 2: Date & Time */
+.datetime-col {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #aaa;
+}
+
+.datetime-col .dt-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.dt-row i { width: 16px; }
+
+/* Column 3: Status (Right) */
+.status-col {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end; /* Pushes badge to bottom if row height grows */
+    height: 100%;
+}
+
+.ap-status-badge {
+    padding: 6px 16px;
+    border-radius: 6px; /* Slightly squarer than pill */
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    text-align: center;
+}
+
+/* Status Colors (Matching the dark/gold theme) */
+.status-completed { 
+    background-color: #2b2318; 
+    color: #cc9c58; 
+    border: none; /* Removed border to match "Completed" look in image */
+}
+
+.status-pending { background: #2a1c05; color: #fbbf24; }
+.status-confirmed { background: #052e16; color: #4ade80; }
+.status-cancelled { background: #2a0a0a; color: #f87171; }
+
+/* --- Mobile Fixes --- */
+@media (max-width: 768px) {
+    .ap-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .ap-header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .ap-card-body {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .status-col {
+        justify-content: flex-start;
+    }
+}

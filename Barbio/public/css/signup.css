@@ -1,0 +1,177 @@
+/* --- SignUp Page Layout --- */
+.su-page {
+    height: 100vh; /* Fixed height, no scroll */
+    width: 100%;
+    background-image: url("/Assets/Login.png"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centered */
+    overflow: hidden; /* Force no scroll */
+}
+
+/* --- Wider Glass Card (Renamed) --- */
+.su-glass-card {
+    width: 700px; 
+    max-width: 90%;
+    padding: 25px;
+    
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- Typography (Renamed) --- */
+.su-brand-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+    text-align: center; 
+}
+
+.su-tagline {
+    font-size: 1rem;
+    opacity: 0.7;
+    margin-bottom: 30px;
+    font-weight: 300;
+    text-align: center;
+}
+
+/* --- The Grid Layout (Renamed) --- */
+.su-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 12px; 
+}
+
+/* Make password span the full width */
+.su-input-group.su-full-width {
+    grid-column: span 2;
+}
+
+/* --- Inputs (Renamed) --- */
+.su-input-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.su-input-group label {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    margin-left: 15px;
+    opacity: 0.9;
+}
+
+.su-input-group input, 
+.su-input-group select {
+    padding: 12px 20px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-size: 0.95rem;
+    transition: background 0.3s ease;
+}
+
+.su-input-group select {
+    width: 100%;
+}
+
+.su-input-group input:focus,
+.su-input-group select:focus {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Select Styling (Renamed) */
+.su-select-wrapper { position: relative; }
+.su-input-group select { appearance: none; cursor: pointer; }
+.su-input-group select option { background-color: #1E1E1E; color: white; }
+
+.su-select-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    font-size: 0.8rem;
+    opacity: 0.7;
+}
+
+/* --- Footer (Renamed) --- */
+.su-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+.su-btn-signup {
+    padding: 12px 35px;
+    border-radius: 50px;
+    background: white; 
+    color: black;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.su-btn-signup:hover {
+    transform: scale(1.05);
+}
+
+.su-link-login {
+    color: white;
+    text-decoration: none;
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+.su-link-login:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* --- Mobile Responsiveness (Renamed) --- */
+@media (max-width: 768px) {
+    .su-page {
+        height: auto;
+        padding: 40px 20px;
+        overflow-y: auto; 
+    }
+    
+    .su-glass-card {
+        width: 100%;
+    }
+    
+    .su-grid {
+        grid-template-columns: 1fr; 
+    }
+    
+    .su-input-group.su-full-width {
+        grid-column: span 1;
+    }
+    
+    .su-footer {
+        flex-direction: column;
+        gap: 20px;
+    }
+}

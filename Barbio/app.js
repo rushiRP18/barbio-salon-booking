@@ -144,10 +144,6 @@ cron.schedule("0 0 * * *", async () => {
 });
 
 
-//root
-app.get("/", (req, res) => {
-  res.render("users/home.ejs")
-})
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -167,6 +163,12 @@ app.use((req, res, next) => {
   res.locals.currUser = req.user; // user of the curr section
   next();
 })
+
+//root
+app.get("/", (req, res) => {
+  // Pass an object where the key 'currUser' holds the value of req.user
+  res.render("users/home.ejs");
+});
 
 
 // Route to serve VAPID public key

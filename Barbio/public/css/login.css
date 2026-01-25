@@ -1,0 +1,153 @@
+/* --- Page Background Layout --- */
+.login {
+    height: 100vh;
+    width: 100%;
+    /* Keep your existing background image settings */
+    background-image: url("/Assets/Login.png"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
+    
+    /* Flexbox to position the card to the right */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Pushes content to the right */
+   
+}
+
+/* --- The Glass Card --- */
+.glass-card {
+    width: 380px;
+    padding: 40px;
+    
+    /* Glassmorphism Effect */
+    background: rgba(0, 0, 0, 0.2); /* Dark transparent bg */
+    backdrop-filter: blur(2px); /* The blur magic */
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+    
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Thin white border */
+    border-radius: 24px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    
+    color: white;
+    margin: 0 5rem;
+}
+
+/* --- Typography --- */
+.brand-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    letter-spacing: -0.5px;
+}
+
+/* --- Inputs --- */
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    margin-left: 15px; /* Align with input curve */
+    opacity: 0.9;
+}
+
+.input-group input {
+   
+    padding: 14px 20px;
+    border-radius: 50px; /* Pill shape */
+    border: none;
+    outline: none;
+    
+    /* Semi-transparent grey/white input background */
+    background: rgba(255, 255, 255, 0.15); 
+    color: white;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.input-group input:focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* --- Footer Area --- */
+.form-footer {
+    margin-top: 40px;
+}
+
+.tagline {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 15px;
+    font-weight: 300;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* --- Login Button (Pill Shape) --- */
+.btn-login {
+    padding: 12px 30px;
+    border-radius: 50px;
+    
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-login:hover {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+.btn-login i {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.btn-login:hover i {
+    transform: translateX(4px); /* Arrow moves slightly */
+}
+
+/* --- Signup Link --- */
+.link-signup {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.link-signup:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .login {
+        justify-content: center; /* Center card on mobile */
+        padding-right: 0;
+    }
+    
+    .glass-card {
+        width: 90%;
+        max-width: 350px;
+    }
+}

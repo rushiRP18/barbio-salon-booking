@@ -1,38 +1,66 @@
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa-solid fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+<nav class="barbio-nav-wrapper">
+  <div class="barbio-navbar">
+    
+    <a class="barbio-brand" href="/">Barbio</a>
+
+    <button class="barbio-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+      <i class="fa-solid fa-bars"></i>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link" aria-current="page" href="/">Home</a>
+    <div class="collapse barbio-menu-container" id="navbarNavAltMarkup">
+      <div class="barbio-menu">
+        
+        <div class="barbio-center-links">
+          <a class="barbio-link" href="/">Home</a> 
 
-        <% if (currUser && currUser.role === "shopkeeper") { %>
-          <!-- Shopkeeper only -->
-          <a class="nav-link" href="/admin/shops">My Shops</a>
-          <a class="nav-link" href="/admin/new">Add New Shop</a>
-          <a class="nav-link" href="/admin/orders">Dashboard</a>
-        <% } %>
+          <% if (currUser && currUser.role === "shopkeeper") { %>
+            <a class="barbio-link" href="/admin/shops">My Shops</a>
+            <a class="barbio-link" href="/admin/new">Add Shop</a>
+            <a class="barbio-link" href="/admin/orders">Dashboard</a>
+          <% } %>
 
-        <% if (currUser && currUser.role === "user") { %>
-          <!-- Normal user only -->
-          <a class="nav-link" href="/shops">Browse Shops</a>
-          <a class="nav-link" href="/user/appointments">My Orders</a>
-        <% } %>
-      </div>
+          <% if (currUser && currUser.role === "user") { %>
+            <a class="barbio-link" href="/shops">Services</a>
+            <a class="barbio-link" href="/user/appointments">My Orders</a>
+          <% } %>
+          
+          <a class="barbio-link" href="/contact">Contact Us</a>
+        </div>
 
-      <div class="navbar-nav ms-auto">
-        <% if (!currUser) { %>
-          <a class="nav-link" aria-current="page" href="/login">Login</a>
-          <a class="nav-link" href="/signup">Sign-Up</a>
-        <% } else { %>
-          <span class="nav-link disabled">Welcome, <%= currUser.username %></span>
-          <a class="nav-link" href="/logout">Logout</a>
-        <% } %>
+        <div class="barbio-auth-links">
+          <% if (!currUser) { %>
+            <a class="barbio-link" href="/login">Login</a>
+            <a class="barbio-link highlight" href="/signup">Sign-Up</a>
+          <% } else { %>
+            <span class="barbio-user">Hi, <%= currUser.username %></span>
+            <a class="barbio-link" href="/logout">Logout</a>
+          <% } %>
+        </div>
+
       </div>
     </div>
   </div>
 </nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.barbio-link');
+
+    navLinks.forEach(link => {
+      // 1. Get the href attribute of the link
+      const linkPath = link.getAttribute('href');
+
+      // 2. Logic to determine if active
+      // Exact match for Home ('/') or Contact
+      if (linkPath === currentPath) {
+        link.classList.add('active');
+      } 
+      // Partial match for sub-pages (e.g., clicking a specific shop keeps 'Services' active)
+      else if (linkPath !== '/' && currentPath.startsWith(linkPath)) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>

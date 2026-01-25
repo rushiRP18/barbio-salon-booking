@@ -1,25 +1,71 @@
 <% layout("layouts/boilerplate") -%>
-<h2>Confirm Your Booking</h2>
+    <div class="confirmBooking">
+        <div class="shp-container-top">
+            <div class="shp-top-content">
+                <h3>
+                    <%= shop.name %>
+                </h3>
+                <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
+                <p class="add"><i class="fa-solid fa-shop"></i>
+                    <%= shop.address %>
+            </div>
+        </div>
+        <div class="cb-content">
+    <h1>Confirm Booking</h1> <div class="cb-seprator"></div>
 
-<p><strong>Shop:</strong> <%= shop.name %></p>
+    <div class="booking-card">
+        
+        <div class="success-icon-container">
+            <div class="success-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+        </div>
 
-<p><strong>Services:</strong></p>
-<ul>
-    <% bookingData.services.forEach(s => { %>
-        <li><%= s.name %> - <%= s.duration %> min - ₹<%= s.price %></li>
-    <% }) %>
-</ul>
+        <div class="booking-header">
+            <h2><%= shop.name %></h2>
+            <p class="location-text">
+                <i class="fa-solid fa-location-dot"></i> <%= shop.address %>
+            </p>
+        </div>
 
-<p><strong>Total Duration:</strong> <%= formattedDuration %></p>
-<p><strong>Total Price:</strong> ₹<%= totalPrice %></p>
-<p><strong>Date:</strong> <%= bookingData.date %></p>
-<p><strong>Time:</strong> <%= formattedTime %></p>
+        <div class="datetime-grid">
+            <div class="dt-item">
+                <i class="fa-regular fa-calendar"></i>
+                <span><%= bookingData.date %></span>
+            </div>
+            <div class="dt-item">
+                <i class="fa-regular fa-clock"></i>
+                <span><%= formattedTime %></span>
+            </div>
+        </div>
 
-<form id="confirmForm" action="/shops/<%= shop._id %>/book/confirm" method="POST">
-    <button type="button" onclick="showAlert()"> Confirm Appointment</button>
-</form>
+        <div class="divider-line"></div>
 
-<div style="margin-top: 15px;">
-    <a href="/shops/<%= shop._id %>/book/availability">Change Slot</a> |
-    <a href="/shops/<%= shop._id %>/book/services">Change Services</a>
+        <div class="bill-details">
+            <% bookingData.services.forEach(s => { %>
+                <div class="bill-row">
+                    <span class="service-name"><%= s.name %></span>
+                    <span class="service-price">₹<%= s.price %></span>
+                </div>
+            <% }) %>
+            
+            <div class="bill-row total-row">
+                <span>Total</span>
+                <span class="total-price">₹<%= totalPrice %></span>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <a href="/shops/<%= shop._id %>/book/availability" class="btn-outline">Change Slot</a>
+            <a href="/shops/<%= shop._id %>/book/services" class="btn-outline">Change Services</a>
+        </div>
+    </div>
+
+    <form id="confirmForm" action="/shops/<%= shop._id %>/book/confirm" method="POST">
+        <button type="button" onclick="showAlert()" class="btn-confirm-final">
+            Confirm Appointment
+        </button>
+    </form>
+
 </div>
+    </div>

@@ -1,36 +1,37 @@
 <% layout("layouts/boilerplate") -%>
+
 <div class="checkAvail">
     <div class="shp-container-top">
-    <div class="shp-top-content">
-      <h3><%= shop.name %></h3>
-    <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
-    <p  class="add"><i class="fa-solid fa-shop"></i><%= shop.address %>
+        <div class="shp-top-content">
+            <h3><%= shop.name %></h3>
+            <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
+            <p class="add"><i class="fa-solid fa-shop"></i><%= shop.address %></p>
+        </div>
     </div>
-  </div>
 
-<div class="ca-content">
-    <h1>Check Availability</h1>
-    <div class="ca-seprator"></div>
+    <div class="ca-content">
+        <h1>Check Availability</h1>
+        <div class="ca-seprator"></div>
 
-    <form action="/shops/<%= shop._id %>/book/availability" method="POST" id="availability-form">
-        
-        <label for="appointment-date">Select Date</label>
-        <input type="date" name="appointment[date]" id="appointment-date" class="ca-input" required>
-        
-        <br><br>
+        <form action="/shops/<%= shop._id %>/book/availability" method="POST" id="availability-form">
+            
+            <label for="appointment-date">Select Date</label>
+            <input type="date" name="appointment[date]" id="appointment-date" class="ca-input" required>
+            
+            <br><br>
 
-        <label>Select Time Slot</label>
-        <div id="slots-container"></div>
-        
-        <input type="hidden" name="appointment[slot]" id="selected-slot" required>
+            <label>Select Time Slot</label>
+            <div id="slots-container"></div>
+            
+            <input type="hidden" name="appointment[slot]" id="selected-slot" required>
 
-        <br>
+            <br>
 
-        <button type="submit" class="btn-confirm">
-            Confirm Booking
-        </button>
-    </form>
-</div>
+            <button type="submit" class="btn-confirm">
+                 Confirm Booking
+            </button>
+        </form>
+    </div>
 </div>
 
 <script>
@@ -45,6 +46,7 @@
     const totalAppointmentTime = selectedServices.reduce((sum, service) => sum + service.duration, 0);
     const requiredSlots = Math.ceil(totalAppointmentTime / 15);
 
+    // --- CORE LOGIC (UNTOUCHED) ---
     function checkConsecutiveAvailability(slots, startSlot, requiredSlots) {
         for (let chair = 0; chair < slots.length; chair++) {
             for (let subSlot = startSlot; subSlot < startSlot + 4; subSlot++) {
@@ -66,10 +68,12 @@
         return false;
     }
 
+    // --- DISPLAY LOGIC (UPDATED FOR STYLING) ---
     function displaySlots(selectedDate) {
         const normDate = new Date(selectedDate).toISOString().split("T")[0];
         const slotsContainer = document.getElementById('slots-container');
         const selectedSlotInput = document.getElementById('selected-slot');
+        
         slotsContainer.innerHTML = '';
         selectedSlotInput.value = '';
 
@@ -92,26 +96,28 @@
             const isHourAvailable = !isPast && checkConsecutiveAvailability(slots, startSlot, requiredSlots);
 
             const slotBox = document.createElement('div');
-            slotBox.style.width = '100px';
-            slotBox.style.height = '40px';
-            slotBox.style.lineHeight = '40px';
-            slotBox.style.textAlign = 'center';
-            slotBox.style.border = '1px solid #ccc';
-            slotBox.style.cursor = isHourAvailable ? 'pointer' : 'not-allowed';
-            slotBox.style.backgroundColor = isHourAvailable ? '#28a745' : '#6c757d';
-            slotBox.style.color = '#fff';
+            
+            // --- FIX: Use Classes instead of Inline Styles ---
+            slotBox.classList.add('time-slot'); // Add base class
             slotBox.textContent = `${hour}:00 - ${hour + 1}:00`;
 
             if (isHourAvailable) {
+                // Click Event
                 slotBox.addEventListener('click', () => {
-                    document.querySelectorAll('#slots-container div').forEach(div => {
-                        div.style.border = '1px solid #ccc';
-                        div.style.opacity = '0.7';
+                    // Remove 'selected' class from all other slots
+                    document.querySelectorAll('.time-slot').forEach(div => {
+                        div.classList.remove('selected');
                     });
-                    slotBox.style.border = '2px solid #007bff';
-                    slotBox.style.opacity = '1';
+                    
+                    // Add 'selected' class to clicked slot (Style handled by CSS)
+                    slotBox.classList.add('selected');
+                    
+                    // Update hidden input
                     selectedSlotInput.value = `${hour},${hour + 1}`;
                 });
+            } else {
+                // Add disabled class if unavailable
+                slotBox.classList.add('disabled');
             }
 
             slotsContainer.appendChild(slotBox);
@@ -123,8 +129,8 @@
         if (selectedDate) displaySlots(selectedDate);
     });
 
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('appointment-date').min = today;
-    document.getElementById('appointment-date').value = today;
-    displaySlots(today);
+    const todayStr = new Date().toISOString().split('T')[0];
+    document.getElementById('appointment-date').min = todayStr;
+    document.getElementById('appointment-date').value = todayStr;
+    displaySlots(todayStr);
 </script>

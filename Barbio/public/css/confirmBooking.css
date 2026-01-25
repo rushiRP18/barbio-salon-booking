@@ -1,0 +1,206 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.confirmBooking{
+    background-color: #1E1E1E;
+    height: 300vh;
+    color: white;
+}
+.cb-content{
+    margin: 0 auto;
+    margin: 2rem;
+}
+
+.cb-content h1{
+    text-align: center;
+    font-size: 2.5rem;
+
+}
+.cb-seprator{
+    width: 100px;
+    background-color: #D6B9A6;
+    height: 2px;
+    margin: 8px auto;
+    margin-bottom: 30px;
+}/* --- Booking Card Container --- */
+.booking-card {
+    background-color: #252525; /* Slightly lighter than background */
+    max-width: 480px;
+    margin: 0 auto 30px auto;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    position: relative;
+}
+
+/* --- Green Check Icon --- */
+/* --- Green Check Icon --- */
+.success-icon-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* UPDATED: Stronger Outer Glow */
+.success-icon {
+    width: 80px; /* Slightly larger to accommodate stronger glow */
+    height: 80px;
+    background: rgba(74, 222, 128, 0.15); /* Slightly more visible background tint */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Layered shadows for intense glow: Inner tight glow + outer wide glow */
+    box-shadow: 0 0 20px rgba(74, 222, 128, 0.5), 
+                0 0 50px rgba(74, 222, 128, 0.3);
+    
+    /* Optional: Add a subtle pulse animation to make it feel alive */
+    animation: glowPulse 2s infinite ease-in-out;
+}
+
+/* UPDATED: Icon Inner Glow */
+.success-icon i {
+    color: #4ade80; /* Bright Green */
+    font-size: 2.5rem; /* Slightly larger icon */
+    /* This makes the actual checkmark shape glow */
+    filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.9));
+}
+
+/* --- Optional Pulse Animation Keyframes --- */
+/* Add this at the end of your CSS file if you want the breathing effect */
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 20px rgba(74, 222, 128, 0.5), 0 0 50px rgba(74, 222, 128, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(74, 222, 128, 0.7), 0 0 70px rgba(74, 222, 128, 0.5);
+        transform: scale(1.03); /* Subtle grow */
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(74, 222, 128, 0.5), 0 0 50px rgba(74, 222, 128, 0.3);
+        transform: scale(1);
+    }
+}
+
+/* --- Header Info --- */
+.booking-header h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.location-text {
+    color: #a1a1aa; /* Grey text */
+    font-size: 0.9rem;
+    margin-bottom: 25px;
+}
+
+.location-text i {
+    margin-right: 6px;
+}
+
+/* --- Date/Time Grid --- */
+.datetime-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 25px;
+    color: #d4d4d8;
+    font-size: 0.95rem;
+}
+
+.dt-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dt-item i {
+    color: #a1a1aa;
+}
+
+/* --- Divider --- */
+.divider-line {
+    height: 1px;
+    background-color: #404040;
+    margin: 20px 0;
+}
+
+/* --- Bill/Services Details --- */
+.bill-details {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.bill-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    color: #d4d4d8;
+    font-size: 0.95rem;
+}
+
+.total-row {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #404040;
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+/* --- Change Buttons (Outline) --- */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-outline {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #525252;
+    border-radius: 12px;
+    color: #a1a1aa;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.btn-outline:hover {
+    border-color: #fff;
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+}
+
+/* --- Final Confirm Button (Gold) --- */
+#confirmForm {
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.btn-confirm-final {
+    width: 100%;
+    padding: 18px;
+    background: transparent;
+    color: #D6B9A6; /* Gold Text */
+    border: 1px solid #D6B9A6; /* Gold Border */
+    border-radius: 50px; /* Pill Shape */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: capitalize;
+    letter-spacing: 0.5px;
+}
+
+.btn-confirm-final:hover {
+    background: #D6B9A6;
+    color: #1E1E1E; /* Dark Text on hover */
+    box-shadow: 0 0 20px rgba(214, 185, 166, 0.2);
+    transform: translateY(-2px);
+}

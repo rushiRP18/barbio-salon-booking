@@ -47,6 +47,18 @@
   font-size: 1.3rem;
   border-radius: 40px;
   border: 1px solid #fafafa;
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.shp-btn a:hover{
+  background-color: #D6B9A6;
+  color: #1E1E1E;
+  cursor: pointer;
+  border-color: #1E1E1E;
+  transform: translateY(-2px);
 }
 .timings{
   position: absolute;
@@ -80,7 +92,23 @@
 
 #shopMap{
   height: 300px;
-  margin: 1rem 0;
+  margin: 1rem 15rem;
+  border-radius: 20px;
+}
+#shopMap {
+  /* Default for Mobile: Full width or small spacing */
+
+  margin: 1rem 0; 
+  width: 100%; /* Ensures it fills the space */
+}
+
+/* When screen is larger than 768px (Tablets & Laptops) */
+@media (min-width: 768px) {
+  #shopMap {
+    /* Now it is safe to add the big margins */
+    margin: 1rem 15rem;
+    width: auto; /* Let the margins dictate the width */
+  }
 }
 
 .review-section{
@@ -291,4 +319,110 @@
   transition: all 0.25s ease;
 
 
+}
+
+
+/* --- services Section Wrapper --- */
+.services-section {
+  max-width: 800px; /* Limits width so lines aren't too long to read */
+  margin: 3rem auto; /* Centers the list on the page */
+  padding: 0 2rem;
+}
+
+/* --- Header --- */
+.services-header {
+  text-align: center; /* Center the heading */
+  margin-bottom: 3rem;
+}
+
+.services-header h3 {
+  font-size: 2rem;
+  font-weight: 400; /* Thinner, more elegant font */
+  color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+  margin-top: 1rem;
+}
+
+.service-separator {
+  width: 80px;
+  height: 2px;
+  background-color: #D6B9A6; /* Gold Accent */
+  margin: 0 auto;
+}
+
+/* --- The Menu List --- */
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between items */
+}
+
+/* --- Individual Item Row --- */
+.menu-item {
+  display: flex;
+  align-items: flex-end; /* Aligns dots to the bottom of text */
+  justify-content: space-between;
+  
+  /* Remove box background, keep it clean */
+  background: transparent; 
+  padding: 5px 0;
+  
+  /* Interaction */
+  transition: transform 0.2s ease;
+  cursor: default;
+}
+
+.menu-item:hover {
+  transform: translateX(10px); /* Subtle slide to right on hover */
+}
+
+.menu-item:hover .menu-name,
+.menu-item:hover .menu-price {
+  color: #D6B9A6; /* Turn gold on hover */
+}
+
+/* --- Name --- */
+.menu-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  white-space: nowrap; /* Keeps name on one line */
+  transition: color 0.3s ease;
+}
+
+/* --- The Magic Dotted Line --- */
+.menu-dots {
+  flex: 1; /* Takes up all available space between name and price */
+  margin: 0 15px;
+  border-bottom: 1px dotted #444; /* Dark grey dots */
+  position: relative;
+  top: -6px; /* Adjusts vertical alignment of dots */
+  opacity: 0.5;
+}
+
+/* --- Price --- */
+.menu-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #D6B9A6; /* Gold */
+  transition: color 0.3s ease;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+  .menu-name { font-size: 1rem; }
+  .menu-price { font-size: 1.1rem; }
+  
+  /* On very small screens, hide dots or reduce margin */
+  .menu-dots { margin: 0 10px; }
+}
+
+/* --- No Services Message --- */
+.no-services {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin-top: 20px;
 }
