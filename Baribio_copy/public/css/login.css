@@ -1,0 +1,212 @@
+/* --- Page Background Layout --- */
+.login {
+    height: 100vh;
+    width: 100%;
+    /* Keep your existing background image settings */
+    background-image: url("/Assets/Login.png"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: black;
+    
+    /* Flexbox to position the card to the right */
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Pushes content to the right */
+   
+}
+
+/* --- The Glass Card --- */
+.glass-card {
+    width: 400px;
+    padding: 40px;
+    
+    /* Glassmorphism Effect */
+    background: rgba(0, 0, 0, 0.2); /* Dark transparent bg */
+    backdrop-filter: blur(2px); /* The blur magic */
+    -webkit-backdrop-filter: blur(12px); /* Safari support */
+    
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Thin white border */
+    border-radius: 24px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    
+    color: white;
+    margin: 5rem 5rem 0;
+}
+
+/* --- Typography --- */
+.brand-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    letter-spacing: -0.5px;
+}
+
+/* --- Inputs --- */
+.input-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    margin-left: 15px; /* Align with input curve */
+    opacity: 0.9;
+}
+
+.input-group input {
+   
+    padding: 14px 20px;
+    border-radius: 50px; /* Pill shape */
+    border: none;
+    outline: none;
+    
+    /* Semi-transparent grey/white input background */
+    background: rgba(255, 255, 255, 0.15); 
+    color: white;
+    font-size: 1rem;
+    transition: background 0.3s ease;
+}
+
+.input-group input:focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* --- Footer Area --- */
+.form-footer {
+    margin-top: 40px;
+}
+
+.tagline {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 15px;
+    font-weight: 300;
+}
+
+.action-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* --- Login Button (Pill Shape) --- */
+.btn-login {
+    padding: 12px 30px;
+    border-radius: 50px;
+    
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: white;
+    
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-login:hover {
+    background: white;
+    color: black;
+    border-color: white;
+}
+
+.btn-login i {
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.btn-login:hover i {
+    transform: translateX(4px); /* Arrow moves slightly */
+}
+
+/* --- Signup Link --- */
+.link-signup {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.link-signup:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* --- Responsive Adjustments --- */
+/* ========================================= */
+/* 📱 LOGIN PAGE – MOBILE POLISH */
+/* ========================================= */
+@media (max-width: 768px) {
+
+  /* ---------- PAGE ---------- */
+  .login {
+    height: 100svh; /* mobile-safe viewport */
+    background-position: center top;
+    justify-content: center;
+    padding: 1.2rem;
+  }
+
+  /* ---------- GLASS CARD ---------- */
+  .glass-card {
+    margin: 0;
+    width: 100%;
+    max-width: 340px;
+    padding: 32px 26px;
+
+    /* slightly softer glass for mobile */
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* ---------- TITLE ---------- */
+  .brand-title {
+    font-size: 1.9rem;
+    text-align: center;
+    margin-bottom: 26px;
+  }
+
+  /* ---------- INPUTS ---------- */
+  .input-group input {
+    padding: 13px 18px;
+    font-size: 0.95rem;
+  }
+
+  .input-group label {
+    font-size: 0.8rem;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .form-footer {
+    margin-top: 30px;
+  }
+
+  .tagline {
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .action-row {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  /* ---------- BUTTON ---------- */
+  .btn-login {
+    width: 100%;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 12px 0;
+  }
+
+  /* ---------- SIGNUP LINK ---------- */
+  .link-signup {
+    font-size: 0.95rem;
+  }
+}

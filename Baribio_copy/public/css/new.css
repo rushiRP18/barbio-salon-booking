@@ -1,0 +1,347 @@
+/* =========================================
+   ADD SHOP PAGE - DARK LUXURY STYLING
+   ========================================= */
+
+/* --- 1. GLOBAL RESET (Crucial for fixing the overlap) --- */
+* {
+    box-sizing: border-box; /* Keeps padding inside the width */
+}
+
+/* --- Page Background --- */
+.add-shop-page {
+    background-color: #0d0d0d; /* Deep Black */
+    min-height: 100vh;
+    color: #fff;
+    
+    /* Your Custom Background Image */
+    background-image: url('/Assets/ud.png'); 
+    background-size: cover;
+    background-position: center;
+    
+    
+    /* Dark Overlay to make text readable */
+    
+    
+    padding: 8rem 15px;
+}
+
+.shop-form-wrapper {
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+/* --- Header --- */
+.form-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.sub-title {
+    display: block;
+    color: #aaa;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.form-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    position: relative;
+    display: inline-block;
+}
+
+.form-header h1::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 3px;
+    background-color: #D6B9A6; /* Gold underline */
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+/* --- Form Layout Elements --- */
+.form-group {
+    margin-bottom: 30px; 
+}
+
+.form-row {
+    display: flex;
+    gap: 25px;
+    align-items: center; 
+    margin-bottom: 30px;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+/* --- Labels (Updated Color) --- */
+label {
+    display: block;
+    color: #D6B9A6; /* UPDATED: Gold Color */
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* --- Styling ALL inputs (Pill Shape) --- */
+.add-shop-page input[type="text"],
+.add-shop-page input[type="number"],
+.add-shop-page input[type="file"] {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.05); 
+    border: 1px solid #444; 
+    border-radius: 30px;
+    padding: 14px 25px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    
+    /* Fixes overlap issues */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+}
+
+/* Focus State - Glow effect */
+.add-shop-page input:focus {
+    border-color: #D6B9A6;
+    background-color: rgba(214, 185, 166, 0.05);
+    box-shadow: 0 0 10px rgba(214, 185, 166, 0.2);
+}
+
+/* Fix file input padding */
+.add-shop-page input[type="file"] {
+    padding: 12px 20px;
+    cursor: pointer;
+}
+
+/* --- "Use Current Location" Button --- */
+.btn-outline-location {
+    white-space: nowrap;
+    background: transparent;
+    border: 1px solid #555;
+    color: #D6B9A6;
+    border-radius: 30px;
+    padding: 0 25px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    height: 50px; /* Explicit height to match inputs */
+    transition: all 0.3s;
+}
+
+.btn-outline-location:hover {
+    border-color: #D6B9A6;
+    background-color: rgba(214, 185, 166, 0.1);
+    color: #fff;
+}
+
+/* --- Search Box --- */
+.search-box {
+    display: flex;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.search-box input {
+    padding-right: 55px; /* Space for icon */
+}
+
+.search-box button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    width: 45px;
+    background: transparent;
+    border: none;
+    color: #D6B9A6;
+    cursor: pointer;
+    font-size: 1.2rem;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.search-box button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.divider {
+    text-align: center;
+    color: #666;
+    margin: 25px 0;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* --- Services Grid --- */
+.services-section {
+    margin-top: 50px;
+    text-align: center;
+    border-top: 1px solid #222;
+    padding-top: 30px;
+}
+
+.services-section h3, 
+.timings-section h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    gap: 20px; 
+    margin-bottom: 20px;
+    align-items: start;
+}
+
+/* Mobile responsive for grid */
+@media (max-width: 600px) {
+    .service-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+    }
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .btn-outline-location {
+        width: 100%;
+        margin-left: 0; /* Reset margin on mobile */
+    }
+}
+
+.btn-add-service {
+    background: transparent;
+    border: 1px dashed #555;
+    color: #aaa;
+    padding: 10px 25px;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.btn-add-service:hover {
+    color: #D6B9A6;
+    border-color: #D6B9A6;
+    background-color: rgba(255,255,255,0.02);
+}
+
+/* --- Timings --- */
+.timings-section {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.justify-center { justify-content: center; }
+.gap-20 { gap: 30px; }
+
+.time-input {
+    width: 110px;
+    text-align: center;
+}
+.time-input input { text-align: center; }
+
+/* --- Create Button --- */
+.form-actions {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.btn-create {
+    background: transparent;
+    border: 1px solid #D6B9A6;
+    color: #D6B9A6;
+    padding: 16px 60px;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.btn-create:hover {
+    background-color: #D6B9A6;
+    color: #0d0d0d;
+    box-shadow: 0 0 25px rgba(214, 185, 166, 0.4);
+    transform: translateY(-2px);
+}
+
+/* --- Modal --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #1a1a1a;
+    padding: 40px;
+    border: 1px solid #333;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    color: #fff;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.modal-content h3 {
+    color: #D6B9A6;
+    margin-bottom: 15px;
+}
+
+.modal-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.btn.confirm {
+    background: #D6B9A6;
+    border: none;
+    color: #000;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: transform 0.2s;
+}
+
+.btn.confirm:hover {
+    transform: scale(1.05);
+}
+
+.btn.cancel {
+    background: transparent;
+    border: 1px solid #666;
+    color: #ccc;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn.cancel:hover {
+    border-color: #fff;
+    color: #fff;
+}

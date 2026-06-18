@@ -1,0 +1,561 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Urbanist", sans-serif;
+}
+.home {
+  height: 100vh;
+  background-image: url("/Assets/landing.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  background-color: black;
+}
+.content {
+  position: absolute;
+  top: 65%;
+  margin-left: 2rem;
+}
+
+.content h1 {
+  font-size: 3.5rem;
+}
+.content p {
+  margin-top: 0.3rem;
+  font-size: 2rem;
+  color: #999999;
+}
+.btn-bg {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0.3rem;
+  width: 14rem;
+  border-radius: 40px;
+  background-color: #d6b9a6;
+}
+.btn-bg button {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  border-radius: 40px;
+  background-color: #261a16;
+  color: white;
+
+  &:hover {
+    background-color: #d6b9a6;
+    color: #261a16;
+    font-size: 1.5rem;
+    transition: 0.3s ease-in-out;
+    font-weight: bold;
+  }
+}
+
+.features {
+  position: relative;
+  height: 100vh;
+  background-image: url("/Assets/features3.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  background-color: black;
+  overflow: hidden;
+}
+.f-container {
+  position: relative;
+  margin-left: 2rem;
+  top: -10%;
+}
+.f-container h1 {
+  font-size: 5rem;
+  color: #d6b9a6;
+}
+.f-content h2 {
+  font-size: 2rem;
+  margin-top: 1rem;
+  font-weight: 200;
+  letter-spacing: 0.5px;
+  color: #d6b9a6;
+}
+.f-content p {
+  font-size: 1.2rem;
+  margin-top: 0.8rem;
+  font-weight: 200;
+}
+
+.feature-steps {
+  position: relative;
+  top: 55%;
+  left: 3%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  z-index: 2;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: rgba(255, 255, 255, 0.35); /* ⬅ much dimmer */
+  font-size: 1.4rem;
+  font-weight: 300;
+  position: relative;
+  transition: color 0.8s ease;
+}
+
+.step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 14px;
+  height: 0; /* start hidden */
+  border-left: 2px dotted rgba(255, 255, 255, 0.4);
+  transition:
+    height 1.8s ease-in-out,
+    border-color 0.6s ease;
+}
+.step.active::after {
+  height: 52px;
+  border-left-color: #d6b9a6;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  transition: background 0.4s ease;
+}
+
+.step.active .dot {
+  background: #d6b9a6;
+}
+
+.step.active {
+  color: #fff;
+}
+
+.features2 {
+  position: relative;
+  height: 100vh;
+  background-image: url("/Assets/quicklisting.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  background-color: black;
+  overflow: hidden;
+}
+
+.features2-content {
+  position: relative;
+  top: 25%;
+  text-align: center;
+}
+.features2-content h1 {
+  font-size: 3.5rem;
+}
+.features2-content p {
+  font-size: 1.3rem;
+  color: #d0d5dd;
+  margin-top: 0.8rem;
+  letter-spacing: 1.5px;
+  line-height: 23px;
+  font-weight: 300;
+}
+.features2-bottom {
+  position: relative;
+  top: 43%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 5rem;
+}
+.bottom-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.bottom-item p {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.shopkeeper {
+  position: relative;
+  height: 100vh;
+  background-image: url("/Assets/shopkeeper.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  background-color: #121213;
+  overflow: hidden;
+}
+.headings {
+  text-align: center;
+  color: #999999;
+  font-size: 2.5rem;
+  position: relative;
+  top: 28%;
+}
+.headings h1 span {
+  color: #d6b9a6;
+}
+/* Wrapper */
+
+/* Wrapper styling (The Gold Container) */
+.button {
+  /* Center the wrapper on the page */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem auto; /* Horizontally center on screen */
+  
+  /* The thin gold border */
+  padding: 6px;
+  
+  width: 13rem;
+  border-radius: 40px;
+  background-color: #d6b9a6;
+  transition: transform 0.3s ease;
+}
+
+/* Anchor reset - Make it fill the wrapper */
+.button a {
+  display: flex; /* Crucial for centering the inner button */
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* The Inner Button (Dark) */
+.button button {
+  width: 100%;
+  padding: 0.8rem 0; /* Vertical padding only */
+  
+  /* Flexbox for perfect text centering */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  
+  /* Radius to fit inside the wrapper */
+  border-radius: 38px; 
+  
+  background-color: #261a16;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect */
+.button button:hover {
+  background-color: #d6b9a6;
+  color: #261a16;
+}
+
+/* Scale Interaction */
+.button:hover {
+  transform: scale(1.05);
+}
+
+.review {
+  height: 100vh;
+  background-color: #261a16;
+}
+.review h1 {
+  font-size: 4rem;
+  color: #d6b9a6;
+  text-align: center;
+  padding-top: 2rem;
+}
+.review-container {
+  height: 80%; /* ✅ REQUIRED */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 100px;
+}
+.review-item-1 {
+  width: 300px; /* ✅ REQUIRED */
+  height: 370px; /* ✅ use fixed height */
+  background-image: url("/Assets/review1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.review-item-1 h2 {
+  margin-top: 6rem;
+  text-align: center;
+  color: #525252;
+  transition: opacity 0.4s ease;
+}
+.review-item-1 p {
+  width: 220px;
+  margin: 0rem auto;
+  text-align: center;
+  color: #525252;
+  padding-left: 0.8rem;
+  transition: opacity 0.4s ease;
+}
+
+.review-item-2 {
+  width: 370px; /* ✅ REQUIRED */
+  height: 370px; /* ✅ use fixed height */
+  background-image: url("/Assets/review2.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.review-item-2 h2 {
+  margin-top: 4rem;
+  text-align: center;
+  color: #525252;
+  font-size: 1.8rem;
+  transition: opacity 0.4s ease;
+}
+.review-item-2 p {
+  width: 220px;
+  margin: 0rem auto;
+  text-align: center;
+  color: #525252;
+  font-size: 1.2rem;
+  transition: opacity 0.4s ease;
+}
+
+.review-item-3 {
+  width: 300px; /* ✅ REQUIRED */
+  height: 370px; /* ✅ use fixed height */
+  background-image: url("/Assets/review3.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.review-item-3 h2 {
+  margin-top: 8rem;
+  text-align: center;
+  color: #525252;
+  transition: opacity 0.4s ease;
+}
+.review-item-3 p {
+  width: 220px;
+  margin: 0rem auto;
+  text-align: center;
+  color: #525252;
+  padding-right: 1rem;
+  transition: opacity 0.4s ease;
+}
+.review-item {
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.review-item.fade-out {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.review-item.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Dots container */
+.review-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+/* Dot style */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #6f5b4f;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dot.active {
+  background-color: #d6b9a6;
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+.review-item p {
+  margin-top: 10px;
+}
+/* ================================================= */
+/* 📱 MOBILE FINAL POLISH (≤ 768px) */
+/* ================================================= */
+@media (max-width: 768px) {
+
+  /* ---------- NAVBAR VISIBILITY FIX ---------- */
+  .barbio-navbar {
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(8px);
+  }
+
+  .barbio-brand {
+    color: #fff;
+  }
+
+  /* ---------- HERO ---------- */
+  .home {
+    height: 100svh;
+    background-image: url("/Assets/home_mob.png");
+    background-size: cover;
+    background-position: center top;
+  }
+
+  .content {
+    top: 54%;
+    margin: 0 1.2rem;
+  }
+
+  .content h1 {
+    font-size: 2.4rem;
+    line-height: 1.15;
+    margin-top: 5rem;
+  }
+
+  .content p {
+    font-size: 1.1rem;
+  }
+
+  /* ---------- FEATURES 1 ---------- */
+  .features {
+    display: flex;
+    flex-direction: column;
+    padding: 4.5rem 0 6rem; /* ⬅ reduced gap */
+    height: auto;
+  }
+
+  .f-container {
+    order: 1;
+    margin: 0 1.2rem 1.8rem;
+    top: 0;
+  }
+
+  .f-container h1 {
+    font-size: 2.6rem;
+  }
+
+  .f-content h2 {
+    font-size: 1.3rem;
+  }
+
+  .f-content p {
+    display: none; /* hide tired of waiting line */
+  }
+
+  .feature-steps {
+    order: 2;
+    margin: 0 1.2rem;
+    gap: 1.4rem;
+    top: 0;
+    left: 0;
+  }
+
+  .step {
+    font-size: 1.05rem;
+  }
+
+  .step.active::after {
+    height: 28px;
+  }
+
+  /* ---------- FEATURES 2 ---------- */
+  .features2 {
+    height: auto;
+    padding: 3rem 0 2.5rem; /* ⬅ reduced gap */
+  }
+
+  .features2-content {
+    top: 0;
+    padding: 0 1.2rem;
+  }
+
+  .features2-content h1 {
+    font-size: 2.2rem;
+  }
+
+  .features2-content p {
+    display: none; /* hide long paragraph */
+  }
+
+  .features2-bottom {
+    margin: 2rem 0 0 1.2rem; /* ⬅ LEFT aligned + tight */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.4rem;
+  }
+
+  .bottom-item {
+    justify-content: flex-start;
+  }
+
+  .bottom-item p {
+    font-size: 1.2rem;
+    text-align: left;
+  }
+
+  /* ---------- REVIEWS ---------- */
+  .review {
+    height: auto;
+    padding: 3rem 0 2.5rem;
+  }
+
+  .review h1 {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .review-container {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .review-item-1,
+  .review-item-3 {
+    display: none;
+  }
+
+  .review-item-2 {
+    width: 90%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+
+  /* ---------- SHOPKEEPER CTA ---------- */
+  .shopkeeper {
+    height: auto;
+    padding: 5rem 0;
+  }
+
+  .headings {
+    top: 0;
+    padding: 0 1.2rem;
+  }
+
+  .headings h1 {
+    font-size: 3rem;
+    line-height: 1.3;
+  }
+}

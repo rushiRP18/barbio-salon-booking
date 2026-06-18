@@ -1,0 +1,136 @@
+<% layout("layouts/boilerplate") -%>
+
+<div class="checkAvail">
+    <div class="shp-container-top">
+        <div class="shp-top-content">
+            <h3><%= shop.name %></h3>
+            <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
+            <p class="add"><i class="fa-solid fa-shop"></i><%= shop.address %></p>
+        </div>
+    </div>
+
+    <div class="ca-content">
+        <h1>Check Availability</h1>
+        <div class="ca-seprator"></div>
+
+        <form action="/shops/<%= shop._id %>/book/availability" method="POST" id="availability-form">
+            
+            <label for="appointment-date">Select Date</label>
+            <input type="date" name="appointment[date]" id="appointment-date" class="ca-input" required>
+            
+            <br><br>
+
+            <label>Select Time Slot</label>
+            <div id="slots-container"></div>
+            
+            <input type="hidden" name="appointment[slot]" id="selected-slot" required>
+
+            <br>
+
+            <button type="submit" class="btn-confirm">
+                 Confirm Booking
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const shopData = {
+        dailySlots: <%- JSON.stringify(shop.dailySlots) %>,
+        opensAt: <%= shop.timing.opensAt %>,
+        closesAt: <%= shop.timing.closesAt %>,
+        chairs: <%= shop.chairs %>
+    };
+
+    const selectedServices = <%- JSON.stringify(selectedServices) %>;
+    const totalAppointmentTime = selectedServices.reduce((sum, service) => sum + service.duration, 0);
+    const requiredSlots = Math.ceil(totalAppointmentTime / 15);
+
+    // --- CORE LOGIC (UNTOUCHED) ---
+    function checkConsecutiveAvailability(slots, startSlot, requiredSlots) {
+        for (let chair = 0; chair < slots.length; chair++) {
+            for (let subSlot = startSlot; subSlot < startSlot + 4; subSlot++) {
+                if (subSlot + requiredSlots > slots[chair].length) break;
+                
+                let allFree = true;
+                for (let s = subSlot; s < subSlot + requiredSlots; s++) {
+                    if (slots[chair][s] === 1) {
+                        allFree = false;
+                        break;
+                    }
+                }
+                
+                if (allFree) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // --- DISPLAY LOGIC (UPDATED FOR STYLING) ---
+    function displaySlots(selectedDate) {
+        const normDate = new Date(selectedDate).toISOString().split("T")[0];
+        const slotsContainer = document.getElementById('slots-container');
+        const selectedSlotInput = document.getElementById('selected-slot');
+        
+        slotsContainer.innerHTML = '';
+        selectedSlotInput.value = '';
+
+        let daily = shopData.dailySlots.find(ds => ds.date === normDate);
+        let slots = daily ? daily.slots : new Array(shopData.chairs).fill().map(() =>
+            new Array(Math.floor((shopData.closesAt - shopData.opensAt) * 4)).fill(0)
+        );
+
+        const today = new Date().toISOString().split('T')[0];
+        const now = new Date();
+
+        for (let hour = shopData.opensAt; hour < shopData.closesAt; hour++) {
+            const startSlot = (hour - shopData.opensAt) * 4;
+
+            // Check if this hour is in the past
+            const dateObj = new Date(selectedDate);
+            dateObj.setHours(hour, 0, 0, 0);
+            const isPast = dateObj < now;
+
+            const isHourAvailable = !isPast && checkConsecutiveAvailability(slots, startSlot, requiredSlots);
+
+            const slotBox = document.createElement('div');
+            
+            // --- FIX: Use Classes instead of Inline Styles ---
+            slotBox.classList.add('time-slot'); // Add base class
+            slotBox.textContent = `${hour}:00 - ${hour + 1}:00`;
+
+            if (isHourAvailable) {
+                // Click Event
+                slotBox.addEventListener('click', () => {
+                    // Remove 'selected' class from all other slots
+                    document.querySelectorAll('.time-slot').forEach(div => {
+                        div.classList.remove('selected');
+                    });
+                    
+                    // Add 'selected' class to clicked slot (Style handled by CSS)
+                    slotBox.classList.add('selected');
+                    
+                    // Update hidden input
+                    selectedSlotInput.value = `${hour},${hour + 1}`;
+                });
+            } else {
+                // Add disabled class if unavailable
+                slotBox.classList.add('disabled');
+            }
+
+            slotsContainer.appendChild(slotBox);
+        }
+    }
+
+    document.getElementById('appointment-date').addEventListener('change', function() {
+        const selectedDate = this.value;
+        if (selectedDate) displaySlots(selectedDate);
+    });
+
+    const todayStr = new Date().toISOString().split('T')[0];
+    document.getElementById('appointment-date').min = todayStr;
+    document.getElementById('appointment-date').value = todayStr;
+    displaySlots(todayStr);
+</script>

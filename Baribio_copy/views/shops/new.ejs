@@ -1,0 +1,254 @@
+<% layout("layouts/boilerplate") -%>
+
+<div class="add-shop-page">
+    <div class="shop-form-wrapper">
+        
+        <div class="form-header">
+            <% if (currUser) { %>
+                <span class="sub-title">Welcome, <%= currUser.username %></span>
+            <% } %>
+            <h1>Add new shop</h1>
+        </div>
+
+        <form id="addShopForm" action="/admin/shops" method="POST">
+            
+            <div class="form-group">
+                <label for="name">Shop name:</label>
+                <input type="text" name="shop[name]" placeholder="Enter shop name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="image">Shop Image:</label>
+                <input name="shop[image]" type="text" placeholder="Paste the image url"  required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="shop[address]" placeholder="Full address" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group flex-grow">
+                    <label for="pincode">Pincode:</label>
+                    <input type="number" id="pincode" name="shop[pincode]" placeholder="123456" required>
+                </div>
+                <button type="button" class="btn-outline-location" onclick="getCurrentLocation()">
+                    <i class="fa-solid fa-location-crosshairs"></i> Use current Location
+                </button>
+            </div>
+
+            <input type="hidden" id="longitude" name="shop[location][coordinates][]" />
+            <input type="hidden" id="latitude" name="shop[location][coordinates][]" />
+
+            <div class="divider">OR</div>
+
+            <div class="search-box">
+                <input type="text" id="locationSearch" placeholder="Search Location">
+                <button type="button" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+
+            <div id="map" style="width:100%; height:300px; border-radius:15px; margin-bottom: 20px;"></div>
+
+            <div class="services-section">
+                <h3>Add services</h3>
+                
+                <div id="services-container">
+                    <div class="service-item">
+                        <div class="service-grid">
+                            <input type="text" name="shop[services][0][name]" placeholder="Service name" required>
+                            <input type="text" name="shop[services][0][description]" placeholder="Description">
+                            <input type="number" name="shop[services][0][price]" placeholder="Price" required>
+                            <input type="number" name="shop[services][0][duration]" placeholder="Duration (min)" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-add-service" onclick="addService()">
+                    <i class="fa-solid fa-plus"></i> Add another service
+                </button>
+            </div>
+
+            <div class="form-group mt-5" style="text-align: center;">
+                <label for="chairs">Number of chairs:</label>
+                <div style="display: flex; justify-content: center;">
+                    <input type="number" name="shop[chairs]" placeholder="e.g. 3" required style="width: 120px; text-align: center;">
+                </div>
+            </div>
+
+            <div class="timings-section">
+                <h3>Timings (24h format)</h3>
+                <div class="form-row justify-center gap-20">
+                    <div class="time-input">
+                        <label>Open</label>
+                        <input type="number" name="shop[timing][opensAt]" min="0" max="23" placeholder="09" required>
+                    </div>
+                    <div class="time-input">
+                        <label>Closes</label>
+                        <input type="number" name="shop[timing][closesAt]" min="0" max="23" placeholder="21" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-create" onclick="addShop()">Create Shop</button>
+            </div>
+
+        </form>
+    </div>
+
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm Shop Creation</h3>
+            <p>Are you sure you want to add this shop?</p>
+            <div class="modal-actions">
+                <button id="confirmBtn" class="btn confirm">Yes, Add Shop</button>
+                <button id="cancelBtn" class="btn cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+    let serviceCount = 1;
+    function addService() {
+        const serviceDiv = document.createElement('div');
+        serviceDiv.classList.add('service-item', 'mt-3'); 
+        serviceDiv.innerHTML = `
+        <div class="service-grid">
+            <input type="text" name="shop[services][${serviceCount}][name]" placeholder="Service Name" required>
+            <input type="text" name="shop[services][${serviceCount}][description]" placeholder="Description">
+            <input type="number" name="shop[services][${serviceCount}][price]" placeholder="Price" required>
+            <input type="number" name="shop[services][${serviceCount}][duration]" placeholder="Duration (minutes)" required>
+        </div>
+    `;
+        document.getElementById('services-container').appendChild(serviceDiv);
+        serviceCount++;
+    }
+
+    // Modal Logic Hook
+    function addShop() {
+        const form = document.getElementById('addShopForm');
+        if (form.checkValidity()) {
+            document.getElementById('confirmationModal').style.display = 'flex';
+        } else {
+            form.reportValidity();
+        }
+    }
+
+    // Modal Events
+    document.getElementById('cancelBtn').onclick = () => {
+        document.getElementById('confirmationModal').style.display = 'none';
+    };
+    document.getElementById('confirmBtn').onclick = () => {
+        document.getElementById('addShopForm').submit();
+    };
+    window.onclick = (event) => {
+        const modal = document.getElementById('confirmationModal');
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+<script>
+    let map, marker;
+    const LOCATIONIQ_API_KEY = "pk.4b10775317572501ecda5e8a469ba38d"; 
+
+    function initMap() {
+        const defaultLocation = [20.5937, 78.9629]; 
+        map = L.map("map").setView(defaultLocation, 5);
+
+        L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a> contributors'
+        }).addTo(map);
+
+        marker = L.marker(defaultLocation, { draggable: true }).addTo(map);
+
+        marker.on("dragend", () => {
+            const pos = marker.getLatLng();
+            updateLocation(pos.lat, pos.lng);
+        });
+
+        map.on("click", (e) => {
+            marker.setLatLng(e.latlng);
+            updateLocation(e.latlng.lat, e.latlng.lng);
+        });
+    }
+
+    function getCurrentLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+                map.setView([lat, lng], 15);
+                marker.setLatLng([lat, lng]);
+                updateLocation(lat, lng);
+            }, () => {
+                alert("Location access denied.");
+            });
+        } else {
+            alert("Geolocation not supported.");
+        }
+    }
+
+    async function updateLocation(lat, lng) {
+        document.getElementById("latitude").value = lat;   
+        document.getElementById("longitude").value = lng;  
+
+        try {
+            const res = await fetch(
+                `https://us1.locationiq.com/v1/reverse?key=${LOCATIONIQ_API_KEY}&lat=${lat}&lon=${lng}&format=json&accept-language=en`
+            );
+            const data = await res.json();
+
+            if (data && data.display_name) {
+                document.getElementById("address").value = data.display_name;
+                if (data.address && data.address.postcode) {
+                    document.getElementById("pincode").value = data.address.postcode;
+                }
+            }
+        } catch (err) {
+            console.error("LocationIQ error:", err);
+        }
+    }
+
+    async function searchLocation() {
+        const query = document.getElementById("locationSearch").value.trim();
+        if (!query) return;
+
+        try {
+            const res = await fetch(
+                `https://us1.locationiq.com/v1/search?key=${LOCATIONIQ_API_KEY}&q=${encodeURIComponent(query)}&format=json&limit=1&accept-language=en`
+            );
+            const results = await res.json();
+
+            if (results && results.length > 0) {
+                const lat = results[0].lat;
+                const lon = results[0].lon;
+
+                map.setView([lat, lon], 15);
+                marker.setLatLng([lat, lon]);
+                updateLocation(lat, lon);
+            } else {
+                alert("No results found.");
+            }
+        } catch (err) {
+            console.error("Search error:", err);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        initMap();
+
+        document.getElementById("searchBtn").addEventListener("click", searchLocation);
+        document.getElementById("locationSearch").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                searchLocation();
+            }
+        });
+    });
+</script>

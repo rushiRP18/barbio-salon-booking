@@ -1,0 +1,222 @@
+<% layout("layouts/boilerplate") -%>
+  <div class="shp-container">
+    <div class="shp-container-top">
+      <div class="shp-top-content">
+        <h3>
+          <%= shop.name %>
+        </h3>
+        <p class="starability-result card-text" data-rating="<%= shop.avgRating %>"> </p>
+        <p class="add"><i class="fa-solid fa-shop"></i>
+          <%= shop.address %>
+      </div>
+    </div>
+    <div class="shp-top-bar">
+      <div class="shp-btn">
+        <% if (currUser && currUser.role=='user' ) { %>
+          <a href="/shops/<%= shop._id %>/book/services">Book Now</a>
+          <% } %>
+      </div>
+      <div class="timings">
+        <div class="timing-head">Timing</div>
+        <div class="timing-seprator"></div>
+        <div class="timings-value">
+          <p class="time-title">Opens</p>
+          <p class="time-val">
+            <%= shop.timing.opensAt %>
+          </p>
+        </div>
+        <div class="timing-seprator"></div>
+        <div class="timings-value">
+          <p class="time-title">Closes</p>
+          <p class="time-val">
+            <%= shop.timing.closesAt %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="services-section">
+      <div class="services-header">
+        <h3>Services</h3>
+        <div class="service-separator"></div>
+      </div>
+
+      <div class="menu-list">
+        <% if (shop.services && shop.services.length> 0) { %>
+          <% for (let i=0; i < shop.services.length; i++) { %>
+
+            <div class="menu-item">
+              <span class="menu-name">
+                <%= shop.services[i].name %>
+              </span>
+
+              <span class="menu-dots"></span>
+
+              <span class="menu-price">₹<%= shop.services[i].price %></span>
+            </div>
+
+            <% } %>
+              <% } else { %>
+                <div class="no-services">
+                  <p>No services available.</p>
+                </div>
+                <% } %>
+      </div>
+    </div>
+
+
+    <div>
+    </div>
+
+
+
+    <% if (currUser && currUser._id.equals(shop.owner._id)) { %>
+      <div class="admin-control-panel">
+
+        <div class="admin-info-item">
+          <i class="fa-solid fa-chair"></i>
+          <span class="admin-label">Capacity:</span>
+          <span class="admin-value">
+            <%= shop.chairs %> Seats
+          </span>
+        </div>
+
+        <div class="admin-action-buttons">
+
+          <a href="/admin/<%= shop._id %>/edit" class="admin-btn admin-btn-edit">
+            <i class="fa-solid fa-pen"></i> Edit
+          </a>
+
+          <form id="addShopForm" method="POST" action="/admin/shops/<%= shop._id %>?_method=DELETE">
+            <button class="admin-btn admin-btn-delete" onclick="delShop()">
+              <i class="fa-solid fa-trash"></i> Delete
+            </button>
+          </form>
+
+        </div>
+      </div>
+      <% } %>
+
+        <!-- Inline Map -->
+        <!-- <h4 class="mt-4">Shop Location</h4> -->
+        <div id="shopMap" style="height: 300px;"
+          data-coordinates='<%- JSON.stringify(shop.location && shop.location.coordinates ? shop.location.coordinates : null) %>'>
+        </div>
+
+        <!-- Reviews -->
+        <div>
+
+          <div class="review-section">
+            <% if(currUser && currUser.role=='user' ) {%>
+              <h2>Leave a Review</h2>
+              <form action="/shops/<%= shop._id %>/reviews" method="POST" validate class="needs-validation">
+                <!-- <div class="mb-3 mt-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <input type="range" min="1" max="5" id="rating" name="review[rating]"
+                                    class="form-range">
+                            </div> -->
+                <div>
+                  <fieldset class="starability-slot">
+
+                    <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked
+                      aria-label="No rating." />
+                    <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                    <label for="first-rate1" title="Terrible">1 star</label>
+                    <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                    <label for="first-rate2" title="Not good">2 stars</label>
+                    <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                    <label for="first-rate3" title="Average">3 stars</label>
+                    <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                    <label for="first-rate4" title="Very good">4 stars</label>
+                    <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                    <label for="first-rate5" title="Amazing">5 stars</label>
+                  </fieldset>
+                </div>
+                <div class="review-textarea">
+                  <textarea name="review[comment]" id="comment" cols="80" rows="4" class="form-control"
+                    required></textarea>
+                </div>
+                <div class="review-btn">
+                  <button>Submit</button>
+                </div>
+              </form>
+
+              <% } %>
+          </div>
+
+          <div class="customer-insights">
+            <h2>Customer Insights</h2>
+            <p>
+              <%= summary %>
+            </p>
+          </div>
+          <div class="all-reviews">
+            <h2>What our customer say's</h2>
+            <div class="review-grid">
+              <% for(review of shop.reviews){ %>
+
+                <div class="review-card">
+
+                  <p class="starability-result card-text" data-rating="<%= review.rating %>">
+                    <%= review.rating %>
+                  </p>
+                  <p class="review-cmt">
+                    <%= review.comment %>
+                  </p>
+                  <div class="review-bottom">
+                    <h5>-<%= review.author.username %>
+                    </h5>
+                    <% if (currUser && currUser._id.equals(review.author._id)) { %>
+                      <form action="/shops/<%= shop._id  %>/reviews/<%= review._id  %>?_method=DELETE" method="POST">
+                        <button>Delete</button>
+                      </form>
+                      <% } %>
+                  </div>
+
+
+                </div>
+
+                <% } %>
+            </div>
+          </div>
+
+        </div>
+
+  </div>
+
+
+  <!-- Leaflet CSS & JS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const mapElement = document.getElementById("shopMap");
+
+      // 1. Read the data from the HTML attribute (Formatter safe)
+      const rawCoords = mapElement.getAttribute("data-coordinates");
+      const shopCoords = rawCoords ? JSON.parse(rawCoords) : null;
+
+      if (shopCoords && shopCoords.length === 2) {
+        // GeoJSON stores as [lng, lat], Leaflet needs [lat, lng]
+        const lng = shopCoords[0];
+        const lat = shopCoords[1];
+
+        const map = L.map("shopMap").setView([lat, lng], 15);
+
+        // Add OSM tiles
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Marker
+        L.marker([lat, lng])
+          .addTo(map)
+          .bindPopup("<b><%= shop.name %></b><br><%= shop.address %>")
+          .openPopup();
+      } else {
+        mapElement.innerHTML = "<div style='height:100%; display:flex; align-items:center; justify-content:center; color:#888;'>Location not available</div>";
+      }
+    });
+  </script>

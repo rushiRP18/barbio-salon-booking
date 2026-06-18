@@ -1,0 +1,168 @@
+<% layout("layouts/boilerplate") -%>
+
+    <% if (!currUser) { %>
+        <h4>Please Login/Signup to see All listings</h4>
+        <a href="/login">Login</a>
+        <% } else { %>
+            <div class="listing-home">
+                <div class="listing-home-top">
+                    <h1>Find your style</h1>
+                </div>
+
+                <!-- Search & Sort Controls -->
+                <div class="listing-search">
+                    <input type="text" id="searchInput" class="form-input" placeholder="Search here" />
+
+                    <button id="searchBtn">Search</button>
+                    <button id="sortBtn">Sort by Nearest</button>
+                </div>
+
+
+                <!-- Loading Indicator -->
+                <div id="loading" class="text-info mb-3" style="display:none;">
+                    <i class="bi bi-arrow-repeat"></i> Searching...
+                </div>
+
+                <!-- Shops List -->
+                <div id="shopsList" class="shop-container">
+                    <% for(let shop of allShops) { %>
+
+                        <a href="/shops/<%= shop._id %>" class="shop-card"
+                            data-lat="<%= shop.location?.coordinates[1] %>"
+                            data-lng="<%= shop.location?.coordinates[0] %>" data-address="<%= shop.address %>">
+
+                            <div class="shop-img">
+                                <img src="<%= shop.image %>" alt="<%= shop.name %>">
+                            </div>
+                            <!-- <img src="<%= shop.image %>" alt=""> -->
+                            <div class="shop-content">
+
+                                <!-- ⭐ Rating at top -->
+                                <div class="shop-rating">
+                                    <p class="starability-result" data-rating="<%= shop.avgRating %>"></p>
+                                   
+                                </div>
+
+                                <h5 class="shop-title">
+                                    <%= shop.name %>
+                                </h5>
+
+                                <p class="shop-address">
+                                    <strong>Address:</strong>
+                                    <%= shop.address %>
+                                </p>
+
+                            </div>
+                        </a>
+
+                        <% } %>
+                </div>
+
+
+            </div>
+            <% } %>
+
+                <!-- Bootstrap Icons -->
+                <link rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+                <script>
+                    const LOCATIONIQ_API_KEY = "pk.4b10775317572501ecda5e8a469ba38d"; // Replace with your key
+                    // Handle Search
+                    document.getElementById("searchBtn").addEventListener("click", async (e) => {
+                        e.preventDefault();
+                        const query = document.getElementById("searchInput").value.trim();
+                        if (!query) return alert("Please enter a location or shop name");
+
+                        document.getElementById("loading").style.display = "block"; // show loading
+
+                        try {
+                            let searchLat = null, searchLng = null;
+
+                            // Try LocationIQ only if query looks like a place
+                            const res = await fetch(
+                                `https://us1.locationiq.com/v1/search.php?key=${LOCATIONIQ_API_KEY}&q=${encodeURIComponent(query)}&format=json&accept-language=en`
+                            );
+                            const data = await res.json();
+
+                            if (data && data.length > 0) {
+                                searchLat = parseFloat(data[0].lat);
+                                searchLng = parseFloat(data[0].lon);
+                            }
+
+                            // Filter shops
+                            const shops = document.querySelectorAll(".shop-card");
+                            shops.forEach(shop => {
+                                const name = shop.querySelector("h5").innerText.toLowerCase();
+                                const address = shop.dataset.address.toLowerCase();
+
+                                const matchesText =
+                                    name.includes(query.toLowerCase()) ||
+                                    address.includes(query.toLowerCase());
+
+                                let matchesDistance = false;
+                                if (searchLat && searchLng) {
+                                    const lat = parseFloat(shop.dataset.lat);
+                                    const lng = parseFloat(shop.dataset.lng);
+                                    const dist = getDistance(searchLat, searchLng, lat, lng);
+                                    matchesDistance = dist <= 10;
+                                }
+
+                                // Show if matches either shop name, address, or within 10km
+                                if (matchesText || matchesDistance) {
+                                    shop.style.display = "block";
+                                } else {
+                                    shop.style.display = "none";
+                                }
+                            });
+
+                        } catch (err) {
+                            console.error("Search error:", err);
+                            alert("Search failed, try again");
+                        } finally {
+                            document.getElementById("loading").style.display = "none"; // hide loading
+                        }
+                    });
+
+
+                    // Handle Sort by Nearest
+                    document.getElementById("sortBtn").addEventListener("click", () => {
+                        if (!navigator.geolocation) {
+                            return alert("Geolocation not supported");
+                        }
+
+                        navigator.geolocation.getCurrentPosition((pos) => {
+                            const userLat = pos.coords.latitude;
+                            const userLng = pos.coords.longitude;
+
+                            const shopList = document.getElementById("shopsList");
+                            const shops = Array.from(shopList.querySelectorAll(".shop-card"));
+
+                            // Sort shops by distance from user
+                            shops.sort((a, b) => {
+                                const distA = getDistance(userLat, userLng, parseFloat(a.dataset.lat), parseFloat(a.dataset.lng));
+                                const distB = getDistance(userLat, userLng, parseFloat(b.dataset.lat), parseFloat(b.dataset.lng));
+                                return distA - distB;
+                            });
+
+                            // Re-render
+                            shopList.innerHTML = "";
+                            shops.forEach(shop => shopList.appendChild(shop));
+                        }, () => {
+                            alert("Unable to fetch your location");
+                        });
+                    });
+
+                    // Haversine formula for distance (km)
+                    function getDistance(lat1, lon1, lat2, lon2) {
+                        const R = 6371;
+                        const dLat = (lat2 - lat1) * Math.PI / 180;
+                        const dLon = (lon2 - lon1) * Math.PI / 180;
+                        const a =
+                            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                            Math.cos(lat1 * Math.PI / 180) *
+                            Math.cos(lat2 * Math.PI / 180) *
+                            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                        return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+                    }
+                </script>

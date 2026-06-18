@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title>Barbio | Book Premium Salons Near You</title>
+
+  <!-- ================= SEO ================= -->
+  <meta name="description" content="Barbio helps you discover premium salons near you, book appointments instantly, skip waiting queues, and manage your grooming effortlessly." />
+
+  <meta name="keywords" content="Barbio, salon booking, barber near me, hair salon, grooming services, appointment booking, barber shop app" />
+
+  <meta name="author" content="Barbio Team" />
+
+  <meta name="robots" content="index, follow" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/Assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/Assets/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/Assets/apple-touch-icon.png" />
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+    integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/css/rating.css">
+  <link rel="stylesheet" href="/css/landing.css" />
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/index.css" />
+  <link rel="stylesheet" href="/css/show.css" />
+  <link rel="stylesheet" href="/css/appointment.css" />
+  <link rel="stylesheet" href="/css/checkAvail.css">
+  <link rel="stylesheet" href="/css/login.css">
+  <link rel="stylesheet" href="/css/signup.css">
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/selectService.css" />
+  <link rel="stylesheet" href="/css/confirmBooking.css" />
+  <link rel="stylesheet" href="/css/userDashboard.css" />
+  <link rel="stylesheet" href="/css/adminDashboard.css" />
+  <link rel="stylesheet" href="/css/new.css" />
+  <link rel="stylesheet" href="/css/edit.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+
+  <!-- SweetAlert2 CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+  <!-- SweetAlert2 JS -->
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <!-- include navbar hrer  -->
+  <%- include("../includes/navbar.ejs") %>
+
+    <div class="container">
+      <%- include("../includes/flash.ejs") %>
+        <%- body %>
+    </div>
+    <%- include("../includes/footer.ejs") %>
+
+      <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+      <script src="/js/modal.js"></script>
+      <script src="/js/subscribe.js"></script>
+      <script src="/js/script.js"></script>
+      <script src="/js/swal.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+
+</html>

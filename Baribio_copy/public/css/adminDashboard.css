@@ -1,0 +1,231 @@
+/* =========================================
+   ORDERS / BOOKINGS PAGE STYLING
+   ========================================= */
+
+/* --- Page Layout --- */
+.orders-page {
+    background-color: #0d0d0d;
+    min-height: 100vh;
+    color: #fff;
+     background-image: url('/Assets/ud.png'); 
+    background-size: cover;
+    background-position: center;
+    padding: 8rem 20px;
+}
+
+.orders-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Header --- */
+.page-header {
+    margin-bottom: 40px;
+}
+
+.page-header .sub-heading {
+    color: #D6B9A6;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+/* --- Table Wrapper (Scrollable on mobile) --- */
+.table-responsive {
+    overflow-x: auto;
+    background-color: #1a1a1a;
+    border-radius: 20px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+/* --- The Table --- */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px; /* Forces scroll on small screens */
+}
+
+/* Header Row */
+.orders-table thead tr {
+    background-color: #222;
+    border-bottom: 2px solid #333;
+}
+
+.orders-table th {
+    text-align: left;
+    padding: 20px;
+    color: #D6B9A6; /* Gold Headers */
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Body Rows */
+.orders-table tbody tr {
+    border-bottom: 1px solid #333;
+    transition: background-color 0.2s;
+}
+
+.orders-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.orders-table tbody tr:hover {
+    background-color: rgba(214, 185, 166, 0.03); /* Subtle Gold hover tint */
+}
+
+.orders-table td {
+    padding: 20px;
+    vertical-align: middle;
+    font-size: 0.95rem;
+    color: #eee;
+}
+
+/* --- Cell Specific Styling --- */
+
+/* Customer Info with Avatar */
+.customer-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar-circle {
+    width: 35px;
+    height: 35px;
+    background-color: #333;
+    color: #D6B9A6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* Text Muted */
+.text-muted {
+    color: #888;
+}
+
+/* Services (Pills) */
+.service-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 250px;
+}
+
+.service-pill {
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid #444;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+
+.service-pill small {
+    color: #D6B9A6;
+    margin-left: 4px;
+}
+
+/* Price */
+.price-cell {
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+/* Date Time Stack */
+.datetime-cell {
+    display: flex;
+    flex-direction: column;
+}
+
+.datetime-cell small {
+    color: #888;
+    margin-top: 4px;
+}
+
+/* --- Status Dropdown Styling --- */
+.select-wrapper {
+    position: relative;
+    width: 140px;
+}
+
+.status-select {
+    width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #0d0d0d;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.status-select:hover {
+    border-color: #D6B9A6;
+}
+
+.status-select:focus {
+    outline: none;
+    border-color: #D6B9A6;
+    box-shadow: 0 0 10px rgba(214, 185, 166, 0.2);
+}
+
+/* Custom Arrow */
+.select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #D6B9A6;
+    font-size: 0.8rem;
+}
+
+/* Status specific border colors (Optional) */
+.status-confirmed { border-color: #4ade80; color: #4ade80; }
+.status-completed { border-color: #D6B9A6; color: #D6B9A6; }
+.status-cancelled { border-color: #f87171; color: #f87171; }
+
+/* Options Dropdown (Hard to style, but dark bg helps) */
+.status-select option {
+    background-color: #1a1a1a;
+    color: #fff;
+    padding: 10px;
+}
+
+/* --- Empty State --- */
+.empty-orders {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #1a1a1a;
+    border-radius: 20px;
+    border: 1px dashed #333;
+    margin-top: 20px;
+}
+
+.empty-orders i {
+    font-size: 3rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.empty-orders p {
+    color: #888;
+    font-size: 1.2rem;
+}

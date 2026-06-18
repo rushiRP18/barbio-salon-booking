@@ -1,0 +1,98 @@
+<% layout("layouts/boilerplate") -%>
+
+<div class="orders-page">
+    <div class="orders-container">
+        
+        <div class="page-header">
+            <span class="sub-heading">Admin Dashboard</span>
+            <h1>Your Shop Bookings</h1>
+        </div>
+
+        <% if (appointments.length === 0) { %>
+            <div class="empty-orders">
+                <i class="fa-regular fa-clipboard"></i>
+                <p>No bookings received yet.</p>
+            </div>
+        <% } else { %>
+            
+            <div class="table-responsive">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Contact</th>
+                            <th>Shop</th>
+                            <th>Services</th>
+                            <th>Total</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% appointments.forEach(app => { %>
+                            <tr>
+                                <td>
+                                    <div class="customer-info">
+                                        <div class="avatar-circle">
+                                            <%= app.customerName.charAt(0).toUpperCase() %>
+                                        </div>
+                                        <span><%= app.customerName %></span>
+                                    </div>
+                                </td>
+                                
+                                <td class="text-muted"><%= app.customer.contactNo %></td>
+
+                                <td><%= app.shopName %></td>
+
+                                <td>
+                                    <div class="service-list">
+                                        <% if (Array.isArray(app.services) && app.services.length > 0) { %>
+                                            <% app.services.forEach(s => { %>
+                                                <span class="service-pill">
+                                                    <%= s.name %> <small>(₹<%= s.price %>)</small>
+                                                </span>
+                                            <% }) %>
+                                        <% } else { %>
+                                            <span class="text-muted">N/A</span>
+                                        <% } %>
+                                    </div>
+                                </td>
+
+                                <td class="price-cell">₹<%= app.totalPrice %></td>
+
+                                <td>
+                                    <div class="datetime-cell">
+                                        <span><%= app.date %></span>
+                                        <small><%= app.time %></small>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <form action="/admin/orders/<%= app.id %>/status" method="POST">
+                                        <div class="select-wrapper">
+                                            <select name="status" onchange="this.form.submit()" class="status-select status-<%= app.status.toLowerCase() %>">
+                                                <option disabled selected hidden><%= app.status %></option>
+                                                <option value="confirmed">Confirmed</option>
+                                                <option value="completed">Completed</option>
+                                                <option value="cancelled">Cancelled</option>
+                                            </select>
+                                            <i class="fa-solid fa-chevron-down select-arrow"></i>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof subscribeToPush === 'function') {
+            subscribeToPush();
+        }
+    });
+</script>

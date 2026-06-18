@@ -1,0 +1,35 @@
+<% layout("layouts/boilerplate") -%>
+
+<div class="login">
+    <div class="login-wrapper">
+        <div class="glass-card">
+            
+            <h1 class="brand-title">Barbio</h1>
+            
+            <form action="/login" method="POST" class="login-form">
+                
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+
+                <div class="form-footer">
+                    <p class="tagline">Find the best saloons near you</p>
+                    
+                    <div class="action-row">
+                        <button class="btn-login">
+                            Log in <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <a href="/signup" class="link-signup">Sign-up</a>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,700 @@
+.shp-container{
+  background-color: #1E1E1E;
+  color: white;
+  padding-bottom: 3rem;
+}
+.shp-container-top{
+  height: 55vh;
+  background-image: url("/Assets/shp_bg1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  background-color: black;
+}
+.shp-top-content{
+  position: relative;
+  top: 65%;
+  margin-left: 2rem;
+}
+.shp-top-content p{
+  color: rgba(255, 255, 255, 0.815);
+}
+.add{
+  margin-top: 8px;
+}
+.add i{
+  margin-right: 5px;
+}
+.shp-top-content h3{
+  font-size: 2.5rem;
+}
+.shp-top-bar {
+  display: flex;
+   position: relative;
+  align-items: center;
+  color: #fff;
+  margin: 2rem;
+}
+
+/* Book button */
+.shp-btn a {
+  padding: 12px 40px;
+  border-radius: 20px;
+  background: #2a1c14;
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.3rem;
+  border-radius: 40px;
+  border: 1px solid #fafafa;
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.shp-btn a:hover{
+  background-color: #D6B9A6;
+  color: #1E1E1E;
+  cursor: pointer;
+  border-color: #1E1E1E;
+  transform: translateY(-2px);
+}
+.timings{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 40%;
+  margin: 0 auto;
+}
+.timing-seprator{
+  height: 40px;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.651);
+}
+.timing-head{
+  font-size: 1.5rem;
+}
+.timings-value{
+  text-align: center;
+  
+}
+.time-title{
+ margin-bottom: 3px;
+ color: rgba(255, 255, 255, 0.651);
+}
+.time-val{
+  font-size: 1.8rem;
+}
+
+#shopMap{
+  height: 300px;
+  margin: 1rem 15rem;
+  border-radius: 20px;
+}
+#shopMap {
+  /* Default for Mobile: Full width or small spacing */
+
+  margin: 1rem 0; 
+  width: 100%; /* Ensures it fills the space */
+}
+
+/* When screen is larger than 768px (Tablets & Laptops) */
+@media (min-width: 768px) {
+  #shopMap {
+    /* Now it is safe to add the big margins */
+    margin: 1rem 15rem;
+    width: auto; /* Let the margins dictate the width */
+  }
+}
+
+.review-section{
+  width: 70%;
+  margin: 3rem auto 1rem;
+  border: 2px solid #D6B9A6;
+  border-radius: 20px;
+  padding: 1rem;
+}
+.review-section h2{
+  font-size: 2rem;
+}
+.review-btn{
+  text-align: end;
+}
+.review-btn button {
+  font-size: 1.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 40px;
+  color: #D6B9A6;
+  background-color: #1E1E1E;
+  border: 2px solid #D6B9A6;
+  text-align: end;
+
+  /* smoother & targeted transitions */
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.review-btn button:hover {
+  cursor: pointer;
+  background-color: #D6B9A6;
+  color: #1E1E1E;
+
+  /* subtle lift */
+  transform: translateY(-2px);
+
+}
+
+.review-btn button:active {
+  /* pressed effect */
+  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(214, 185, 166, 0.3);
+}
+/* wrapper spacing */
+.review-textarea {
+  margin: 0rem 0;
+}
+
+/* textarea base */
+.review-textarea textarea.form-control {
+  resize: vertical;
+  min-height: 160px;
+
+  background-color: #1E1E1E;
+  color: #EDEDED;
+
+  border-radius: 14px;
+
+  padding: 1rem 1.2rem;
+  font-size: 1rem;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease;
+}
+
+/* placeholder (if you add one) */
+.review-textarea textarea::placeholder {
+  color: #9e9e9e;
+}
+
+/* focus state */
+.review-textarea textarea:focus {
+  outline: none;
+  background-color: #222;
+  border-color: #D6B9A6;
+  box-shadow: 0 0 0 3px rgba(214, 185, 166, 0.35);
+}
+
+/* invalid state (Bootstrap compatible) */
+.review-textarea textarea.is-invalid {
+  border-color: #e74c3c;
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.25);
+}
+
+/* invalid feedback text */
+.review-textarea .invalid-feedback {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  color: #e74c3c;
+}
+
+/* smooth resize handle */
+.review-textarea textarea::-webkit-resizer {
+  border-radius: 0 0 14px 0;
+}
+
+.customer-insights {
+  margin: 2.5rem 2rem;
+  padding: 1.8rem 2rem;
+
+  background: linear-gradient(
+    145deg,
+    #1e1e1e,
+    #252525
+  );
+
+  border-left: 5px solid #D6B9A6;
+  border-radius: 16px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.customer-insights h2 {
+  margin-bottom: 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #D6B9A6;
+}
+
+.customer-insights p {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #E6E6E6;
+}
+
+/* optional subtle emphasis for key phrases */
+.customer-insights p strong {
+  color: #ffffff;
+}
+
+.all-reviews{
+  margin: 1rem 2rem;
+}
+.all-reviews h2{
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+.row{
+  display: flex;
+  gap: 2rem;
+}
+.row-item{
+  border: 2px solid wheat;
+  width: 15%;
+}
+.review-grid{
+  display: flex;
+  flex-direction: column;
+  margin-left: 1rem;
+}
+.review-card {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(255, 255, 255, 0.08),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      #1f1f1f,
+      #0e0e0e
+    );
+
+  color: #eaeaea;
+  border-radius: 20px;
+  padding: 0.8rem 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  margin-bottom: 2rem;
+
+}
+
+.review-cmt {
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+.review-bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.review-bottom h5{
+  font-size: 1rem;
+  color: #838181;
+}
+.review-bottom button{
+  
+  background: linear-gradient(135deg, #8b1d1d, #4b0f0f);
+  color: #fff;
+  border: 1px solid rgba(255, 80, 80, 0.3);
+  padding: 0.55rem 1.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 15px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+  transition: all 0.25s ease;
+
+
+}
+
+
+/* --- services Section Wrapper --- */
+.services-section {
+  max-width: 800px; /* Limits width so lines aren't too long to read */
+  margin: 3rem auto; /* Centers the list on the page */
+  padding: 0 2rem;
+}
+
+/* --- Header --- */
+.services-header {
+  text-align: center; /* Center the heading */
+  margin-bottom: 3rem;
+}
+
+.services-header h3 {
+  font-size: 2rem;
+  font-weight: 400; /* Thinner, more elegant font */
+  color: #fff;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+  margin-top: 1rem;
+}
+
+.service-separator {
+  width: 80px;
+  height: 2px;
+  background-color: #D6B9A6; /* Gold Accent */
+  margin: 0 auto;
+}
+
+/* --- The Menu List --- */
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Space between items */
+}
+
+/* --- Individual Item Row --- */
+.menu-item {
+  display: flex;
+  align-items: flex-end; /* Aligns dots to the bottom of text */
+  justify-content: space-between;
+  
+  /* Remove box background, keep it clean */
+  background: transparent; 
+  padding: 5px 0;
+  
+  /* Interaction */
+  transition: transform 0.2s ease;
+  cursor: default;
+}
+
+.menu-item:hover {
+  transform: translateX(10px); /* Subtle slide to right on hover */
+}
+
+.menu-item:hover .menu-name,
+.menu-item:hover .menu-price {
+  color: #D6B9A6; /* Turn gold on hover */
+}
+
+/* --- Name --- */
+.menu-name {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #ffffff;
+  white-space: nowrap; /* Keeps name on one line */
+  transition: color 0.3s ease;
+}
+
+/* --- The Magic Dotted Line --- */
+.menu-dots {
+  flex: 1; /* Takes up all available space between name and price */
+  margin: 0 15px;
+  border-bottom: 1px dotted #444; /* Dark grey dots */
+  position: relative;
+  top: -6px; /* Adjusts vertical alignment of dots */
+  opacity: 0.5;
+}
+
+/* --- Price --- */
+.menu-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #D6B9A6; /* Gold */
+  transition: color 0.3s ease;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+  .menu-name { font-size: 1rem; }
+  .menu-price { font-size: 1.1rem; }
+  
+  /* On very small screens, hide dots or reduce margin */
+  .menu-dots { margin: 0 10px; }
+}
+
+/* --- No Services Message --- */
+.no-services {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  margin-top: 20px;
+}
+/* =========================================
+   ADMIN CONTROL PANEL STYLING
+   ========================================= */
+
+.admin-control-panel {
+    background-color: #1a1a1a; /* Slightly lighter than page bg */
+    border: 1px solid #333;
+    border-radius: 15px;
+    padding: 20px 25px;
+    margin: 5rem 14rem;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+
+/* --- Info Section (Seats) --- */
+.admin-info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ccc;
+    font-size: 1rem;
+}
+
+.admin-info-item i {
+    color: #D6B9A6; /* Gold Icon */
+}
+
+.admin-label {
+    color: #888;
+}
+
+.admin-value {
+    color: #fff;
+    font-weight: 700;
+}
+
+/* --- Buttons Area --- */
+.admin-action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* --- General Admin Button --- */
+.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+/* Edit Button (Gold Theme) */
+.admin-btn-edit {
+    border: 1px solid #D6B9A6;
+    color: #D6B9A6;
+}
+
+.admin-btn-edit:hover {
+    background-color: #D6B9A6;
+    color: #000;
+    box-shadow: 0 0 15px rgba(214, 185, 166, 0.3);
+}
+
+/* Delete Button (Red Danger Theme) */
+.admin-btn-delete {
+    border: 1px solid #ef4444; /* Soft Red */
+    color: #ef4444;
+}
+
+.admin-btn-delete:hover {
+    background-color: #ef4444;
+    color: #fff;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .admin-control-panel {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .admin-action-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .admin-btn {
+        flex: 1;
+        justify-content: center;
+    }
+}
+
+/* ================================================= */
+/* 📱 SHOP DETAILS PAGE – MOBILE OPTIMIZATION */
+/* ================================================= */
+@media (max-width: 768px) {
+
+  /* ---------- HERO ---------- */
+  .shp-container-top {
+    height: 38vh;
+    background-position: center top;
+  }
+
+  .shp-top-content {
+    top: 55%;
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+  }
+
+  .shp-top-content h3 {
+    font-size: 1.9rem;
+    line-height: 1.2;
+  }
+
+  /* ---------- TOP BAR (BOOK + TIMINGS) ---------- */
+  .shp-top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin: 1.5rem 1.2rem;
+  }
+
+  .shp-btn a {
+    font-size: 1.1rem;
+    padding: 10px 30px;
+  }
+
+  .timings {
+    position: static;
+    transform: none;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .timing-head {
+    font-size: 1.2rem;
+  }
+
+  .time-val {
+    font-size: 1.4rem;
+  }
+
+  /* ---------- SERVICES ---------- */
+  .services-section {
+    margin: 2.5rem 0;
+    padding: 0 1.2rem;
+  }
+
+  .services-header h3 {
+    font-size: 1.6rem;
+  }
+
+  .menu-name {
+    font-size: 1.05rem;
+  }
+
+  .menu-price {
+    font-size: 1.1rem;
+  }
+
+  .menu-item:hover {
+    transform: none; /* disable slide on mobile */
+  }
+
+  /* ---------- MAP ---------- */
+  #shopMap {
+    height: 260px;
+    margin: 1.5rem 1.2rem;
+    border-radius: 16px;
+  }
+
+  /* ---------- REVIEW FORM ---------- */
+  .review-section {
+    width: auto;
+    margin: 2.5rem 1.2rem;
+    padding: 1rem;
+  }
+
+  .review-section h2 {
+    font-size: 1.6rem;
+  }
+
+  .review-btn button {
+    font-size: 1.2rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ---------- CUSTOMER INSIGHTS ---------- */
+  .customer-insights {
+    margin: 2rem 1.2rem;
+    padding: 1.4rem;
+  }
+
+  .customer-insights h2 {
+    font-size: 1.4rem;
+  }
+
+  .customer-insights p {
+    font-size: 0.95rem;
+  }
+
+  /* ---------- ALL REVIEWS ---------- */
+  .all-reviews {
+    margin: 2rem 1.2rem;
+  }
+
+  .all-reviews h2 {
+    font-size: 1.6rem;
+  }
+
+  .review-card {
+    padding: 0.8rem 1rem;
+  }
+
+  .review-cmt {
+    font-size: 1.05rem;
+  }
+
+  /* ---------- ADMIN PANEL ---------- */
+  .admin-control-panel {
+    margin: 2.5rem 1.2rem;
+    padding: 1.2rem;
+  }
+
+  .admin-action-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .admin-btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+
+  /* ---------- REVIEW TEXTAREA ---------- */
+  .review-textarea textarea.form-control {
+    width: 100%;
+    min-height: 140px;        /* ⬅ slightly shorter */
+    font-size: 0.95rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .review-textarea {
+    margin-top: 0.8rem;
+  }
+
+  /* ---------- MAP POLISH ---------- */
+  #shopMap {
+    height: 230px;            /* ⬅ slightly reduced */
+    margin: 1.8rem 0rem;   /* ⬅ more vertical breathing */
+    border-radius: 18px;     /* matches cards & sections */
+  }
+}

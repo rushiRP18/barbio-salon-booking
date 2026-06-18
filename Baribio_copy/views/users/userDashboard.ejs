@@ -1,0 +1,143 @@
+<% layout("layouts/boilerplate") -%>
+
+  <div class="ap-page-wrapper">
+
+    <div class="ap-container">
+      <h2 class="ap-title">Your Appointments</h2>
+
+      <% if (appointments.length===0) { %>
+        <div class="ap-empty-state">
+          <i class="fa-regular fa-calendar-xmark"></i>
+          <p>No appointments found.</p>
+        </div>
+        <% } else { %>
+
+          <div class="ap-filters">
+            <button class="ap-filter-btn active" data-status="all">All</button>
+            <button class="ap-filter-btn" data-status="pending">Pending</button>
+            <button class="ap-filter-btn" data-status="confirmed">Confirmed</button>
+            <button class="ap-filter-btn" data-status="completed">Completed</button>
+            <button class="ap-filter-btn" data-status="cancelled">Cancelled</button>
+          </div>
+
+          <div class="ap-list" id="appointments-container">
+            <% appointments.forEach(app=> { %>
+
+              <div class="ap-card appointment-card" data-status="<%= app.status %>">
+
+                <div class="ap-card-header">
+                  <h3 class="ap-service-name">
+                    <%= app.services %>
+                  </h3>
+
+                  <div class="ap-header-actions">
+                    <i class="fa-solid fa-share-nodes icon-action"></i>
+                    <i class="fa-regular fa-bookmark icon-action"></i>
+
+                    <% if (app.shopLat && app.shopLng) { %>
+                      <button class="ap-btn-directions show-directions-btn" data-lat="<%= app.shopLat %>"
+                        data-lng="<%= app.shopLng %>">
+                        Get Directions
+                      </button>
+                      <% } %>
+                  </div>
+                </div>
+
+                <div class="ap-dashed-divider"></div>
+
+                <div class="ap-card-body">
+
+                  <div class="ap-info-col location-col">
+                    <div class="icon-wrapper">
+                      <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div class="text-wrapper">
+                      <span class="shop-name">
+                        <%= app.shopName %>
+                      </span>
+                      <span class="shop-address">
+                        <%= app.address || 'Shirpur, Maharashtra' %>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="ap-info-col datetime-col">
+                    <div class="dt-row">
+                      <i class="fa-regular fa-calendar"></i>
+                      <span>
+                        <%= app.date.toDateString() %>
+                      </span>
+                    </div>
+                    <div class="dt-row">
+                      <i class="fa-regular fa-clock"></i>
+                      <span>
+                        <%= app.time %>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="ap-info-col status-col">
+                    <span class="ap-status-badge status-<%= app.status %>">
+                      <%= app.status %>
+                    </span>
+                  </div>
+
+                </div>
+              </div>
+              <% }) %>
+          </div>
+          <% } %>
+    </div>
+  </div>
+
+  <script>
+    // 1. Directions Logic
+    document.querySelectorAll(".show-directions-btn").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation(); // Prevent triggering card clicks if any
+        const lat = btn.getAttribute("data-lat");
+        const lng = btn.getAttribute("data-lng");
+
+        if (lat && lng) {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+              const userLat = position.coords.latitude;
+              const userLng = position.coords.longitude;
+              // Open Google Maps
+              const url = `https://www.google.com/maps/dir/?api=1&origin=${userLat},${userLng}&destination=${lat},${lng}`;
+              window.open(url, "_blank");
+            }, () => {
+              // Fallback
+              const url = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+              window.open(url, "_blank");
+            });
+          } else {
+            alert("Geolocation is not supported by this browser.");
+          }
+        } else {
+          alert("Shop location not available.");
+        }
+      });
+    });
+
+    // 2. Filter Logic
+    document.querySelectorAll('.ap-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const status = btn.getAttribute('data-status');
+
+        // Highlight active button
+        document.querySelectorAll('.ap-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Show/Hide cards
+        document.querySelectorAll('.appointment-card').forEach(card => {
+          if (status === "all" || card.getAttribute('data-status') === status) {
+            card.style.display = "flex"; // Note: Display flex for the horizontal layout
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+  <script src="/public/js/subscribe.js"></script>

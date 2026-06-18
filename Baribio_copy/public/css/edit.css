@@ -1,0 +1,38 @@
+/* --- Edit Page Specifics --- */
+
+/* Service Item Container (Needs relative for the absolute delete button) */
+.service-item {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid #333;
+    border-radius: 20px;
+    padding: 20px;
+    padding-top: 35px; /* Extra space for the delete button */
+    margin-bottom: 20px;
+}
+
+/* Delete Service Button (Top Right Corner) */
+.btn-delete-service {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: #ef4444; /* Soft Red */
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+}
+
+.btn-delete-service:hover {
+    transform: scale(1.2) rotate(90deg);
+}
+
+/* Back Link in Header */
+.form-header .sub-title {
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.form-header .sub-title:hover {
+    color: #D6B9A6;
+}
