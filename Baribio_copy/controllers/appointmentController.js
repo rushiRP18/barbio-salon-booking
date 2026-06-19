@@ -200,6 +200,25 @@ module.exports.postConfirm = async (req, res) => {
       console.log('No push subscription for owner:', owner._id);
     }
 
+    // --- Real-time socket notification to shopkeeper dashboard ---
+    const { getIO } = require("../socketManager");
+    const io = getIO();
+    if (io) {
+      const totalDurationSocket = bookingData.services.reduce((sum, s) => sum + s.duration, 0);
+      const endTimeSocket = new Date(startTime.getTime() + totalDurationSocket * 60000);
+      io.to(`shopkeeper:${owner._id.toString()}`).emit("new-order", {
+        id: appointment._id,
+        customerName: customer.username,
+        contactNo: customer.contactNo,
+        shopName: shop.name,
+        services: bookingData.services,
+        totalPrice: bookingData.services.reduce((sum, s) => sum + s.price, 0),
+        date: new Date(bookingData.date).toLocaleDateString(),
+        time: `${startTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} - ${endTimeSocket.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`,
+        status: "pending"
+      });
+    }
+
     delete req.session.bookingData;
     req.flash("success", `Appointment booked successfully @ ${shop.name}`);
     res.redirect("/shops");

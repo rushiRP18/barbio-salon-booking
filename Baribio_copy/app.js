@@ -252,6 +252,10 @@ const server = app.listen(PORT, () => {
   console.log(`Server is listening to port ${PORT}`)
 });
 
+// Initialize Socket.IO on the existing HTTP server
+const { initSocket } = require("./socketManager");
+initSocket(server);
+
 // ============================================
 // Graceful shutdown for Render SIGTERM
 // ============================================

@@ -9,13 +9,13 @@
         </div>
 
         <% if (appointments.length === 0) { %>
-            <div class="empty-orders">
+            <div class="empty-orders" id="empty-orders-box">
                 <i class="fa-regular fa-clipboard"></i>
                 <p>No bookings received yet.</p>
             </div>
         <% } else { %>
             
-            <div class="table-responsive">
+            <div class="table-responsive" id="orders-table-wrapper">
                 <table class="orders-table">
                     <thead>
                         <tr>
@@ -28,7 +28,7 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="orders-tbody">
                         <% appointments.forEach(app => { %>
                             <tr>
                                 <td>
@@ -89,10 +89,201 @@
     </div>
 </div>
 
+<!-- Toast container for real-time notifications -->
+<div id="socket-toast-container"></div>
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         if (typeof subscribeToPush === 'function') {
             subscribeToPush();
         }
+
+        // =====================================================
+        // Socket.IO — Real-time new order updates
+        // =====================================================
+        if (typeof io === 'undefined') return; // Socket.IO client not loaded
+
+        // Get current user ID from the page (rendered server-side)
+        const currentUserId = '<%= typeof currUser !== "undefined" && currUser ? currUser._id : "" %>';
+        if (!currentUserId) return; // Not logged in or no user
+
+        // Connect to Socket.IO server (same origin)
+        const socket = io({
+            reconnection: true,
+            reconnectionAttempts: 10,
+            reconnectionDelay: 1000,
+            reconnectionDelayMax: 5000,
+        });
+
+        // Join the shopkeeper-specific room
+        socket.on('connect', () => {
+            console.log('[Socket.IO] Connected:', socket.id);
+            socket.emit('join-shopkeeper-room', currentUserId);
+        });
+
+        socket.on('reconnect', () => {
+            console.log('[Socket.IO] Reconnected, re-joining room');
+            socket.emit('join-shopkeeper-room', currentUserId);
+        });
+
+        socket.on('disconnect', (reason) => {
+            console.log('[Socket.IO] Disconnected:', reason);
+        });
+
+        // Duration (ms) for the new-order highlight effect
+        const HIGHLIGHT_DURATION = 8000;
+
+        // Listen for new orders
+        socket.on('new-order', (order) => {
+            console.log('[Socket.IO] New order received:', order);
+
+            // 1. Show toast notification
+            showNewOrderToast(order);
+
+            // 2. Insert the order row into the table
+            insertOrderRow(order);
+        });
+
+        /**
+         * Show a toast notification for a new order.
+         */
+        function showNewOrderToast(order) {
+            const container = document.getElementById('socket-toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'socket-toast';
+            toast.innerHTML = `
+                <div class="socket-toast-icon">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <div class="socket-toast-body">
+                    <strong>New Order Received!</strong>
+                    <p>${order.customerName} booked at ${order.shopName}</p>
+                </div>
+                <button class="socket-toast-close" aria-label="Close">&times;</button>
+            `;
+
+            container.appendChild(toast);
+
+            // Trigger animation
+            requestAnimationFrame(() => toast.classList.add('show'));
+
+            const dismiss = () => {
+                toast.classList.remove('show');
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 400);
+            };
+
+            // Auto dismiss after 5 seconds
+            const timer = setTimeout(dismiss, 5000);
+
+            // Manual close
+            toast.querySelector('.socket-toast-close').addEventListener('click', () => {
+                clearTimeout(timer);
+                dismiss();
+            });
+        }
+
+        /**
+         * Dynamically insert a new order row at the top of the table.
+         * If the table doesn't exist yet (empty state), create it.
+         */
+        function insertOrderRow(order) {
+            let tbody = document.getElementById('orders-tbody');
+
+            // If no table exists (empty state), create the table structure
+            if (!tbody) {
+                const emptyBox = document.getElementById('empty-orders-box');
+                if (emptyBox) emptyBox.remove();
+
+                const container = document.querySelector('.orders-container');
+                const tableHTML = `
+                    <div class="table-responsive" id="orders-table-wrapper">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Customer</th>
+                                    <th>Contact</th>
+                                    <th>Shop</th>
+                                    <th>Services</th>
+                                    <th>Total</th>
+                                    <th>Date &amp; Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-tbody"></tbody>
+                        </table>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', tableHTML);
+                tbody = document.getElementById('orders-tbody');
+            }
+
+            // Build services HTML
+            let servicesHTML = '';
+            if (Array.isArray(order.services) && order.services.length > 0) {
+                servicesHTML = order.services.map(s =>
+                    `<span class="service-pill">${s.name} <small>(₹${s.price})</small></span>`
+                ).join('');
+            } else {
+                servicesHTML = '<span class="text-muted">N/A</span>';
+            }
+
+            // Build the initial character for the avatar
+            const initial = order.customerName ? order.customerName.charAt(0).toUpperCase() : '?';
+
+            const row = document.createElement('tr');
+            row.className = 'new-order-highlight';
+            row.innerHTML = `
+                <td>
+                    <div class="customer-info">
+                        <div class="avatar-circle">${initial}</div>
+                        <span>${order.customerName} <span class="new-order-badge">NEW</span></span>
+                    </div>
+                </td>
+                <td class="text-muted">${order.contactNo || 'N/A'}</td>
+                <td>${order.shopName}</td>
+                <td>
+                    <div class="service-list">${servicesHTML}</div>
+                </td>
+                <td class="price-cell">₹${order.totalPrice}</td>
+                <td>
+                    <div class="datetime-cell">
+                        <span>${order.date}</span>
+                        <small>${order.time}</small>
+                    </div>
+                </td>
+                <td>
+                    <form action="/admin/orders/${order.id}/status" method="POST">
+                        <div class="select-wrapper">
+                            <select name="status" onchange="this.form.submit()" class="status-select status-pending">
+                                <option disabled selected hidden>pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down select-arrow"></i>
+                        </div>
+                    </form>
+                </td>
+            `;
+
+            // Prepend the new row (newest first)
+            tbody.insertBefore(row, tbody.firstChild);
+
+            // Remove highlight after configured duration
+            setTimeout(() => {
+                row.classList.remove('new-order-highlight');
+                const badge = row.querySelector('.new-order-badge');
+                if (badge) {
+                    badge.classList.add('fade-out');
+                    setTimeout(() => badge.remove(), 500);
+                }
+            }, HIGHLIGHT_DURATION);
+        }
+
+        // Cleanup on page unload to prevent memory leaks
+        window.addEventListener('beforeunload', () => {
+            socket.disconnect();
+        });
     });
 </script>
