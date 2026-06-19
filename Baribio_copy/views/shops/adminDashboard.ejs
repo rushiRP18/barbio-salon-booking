@@ -4,8 +4,14 @@
     <div class="orders-container">
         
         <div class="page-header">
-            <span class="sub-heading">Admin Dashboard</span>
-            <h1>Your Shop Bookings</h1>
+            <div>
+                <span class="sub-heading">Admin Dashboard</span>
+                <h1>Your Shop Bookings</h1>
+            </div>
+            <button type="button" class="refresh-dashboard-btn" id="refresh-dashboard-btn" onclick="refreshDashboard()">
+                <i class="fa-solid fa-arrows-rotate"></i>
+                Refresh Dashboard
+            </button>
         </div>
 
         <% if (appointments.length === 0) { %>
@@ -130,9 +136,6 @@
             console.log('[Socket.IO] Disconnected:', reason);
         });
 
-        // Duration (ms) for the new-order highlight effect
-        const HIGHLIGHT_DURATION = 8000;
-
         // Listen for new orders
         socket.on('new-order', (order) => {
             console.log('[Socket.IO] New order received:', order);
@@ -184,6 +187,31 @@
         }
 
         /**
+         * Dismiss the "New" highlight when the shopkeeper clicks a new-order row.
+         * The click handler is attached to each new row and ignores clicks
+         * on the status <select> so that status changes still work normally.
+         */
+        function attachDismissHandler(row) {
+            row.addEventListener('click', (e) => {
+                // Don't dismiss if the shopkeeper is interacting with the status dropdown
+                if (e.target.closest('.select-wrapper')) return;
+
+                // Smoothly remove highlight
+                row.classList.add('dismiss');
+                const badge = row.querySelector('.new-order-badge');
+                if (badge) {
+                    badge.classList.add('fade-out');
+                    setTimeout(() => badge.remove(), 500);
+                }
+                // After transition finishes, remove the highlight class entirely
+                setTimeout(() => {
+                    row.classList.remove('new-order-highlight', 'dismiss');
+                    row.style.cursor = '';
+                }, 450);
+            });
+        }
+
+        /**
          * Dynamically insert a new order row at the top of the table.
          * If the table doesn't exist yet (empty state), create it.
          */
@@ -193,7 +221,7 @@
             // If no table exists (empty state), create the table structure
             if (!tbody) {
                 const emptyBox = document.getElementById('empty-orders-box');
-                if (emptyBox) emptyBox.remove();
+                if (emptyBox) emptyBox.style.display = 'none';
 
                 const container = document.querySelector('.orders-container');
                 const tableHTML = `
@@ -270,15 +298,8 @@
             // Prepend the new row (newest first)
             tbody.insertBefore(row, tbody.firstChild);
 
-            // Remove highlight after configured duration
-            setTimeout(() => {
-                row.classList.remove('new-order-highlight');
-                const badge = row.querySelector('.new-order-badge');
-                if (badge) {
-                    badge.classList.add('fade-out');
-                    setTimeout(() => badge.remove(), 500);
-                }
-            }, HIGHLIGHT_DURATION);
+            // Attach click-to-dismiss handler (persistent until user clicks)
+            attachDismissHandler(row);
         }
 
         // Cleanup on page unload to prevent memory leaks
@@ -286,4 +307,66 @@
             socket.disconnect();
         });
     });
+
+    /**
+     * Refresh Dashboard — clears all displayed orders from the UI only.
+     * Does NOT delete anything from MongoDB or affect any backend state.
+     * Socket.IO remains connected so new orders will still appear in real-time.
+     */
+    function refreshDashboard() {
+        Swal.fire({
+            title: 'Refresh Dashboard',
+            text: 'This will clear all currently displayed orders from the dashboard view. Orders will NOT be deleted from the database. Do you want to continue?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Refresh',
+            cancelButtonText: 'Cancel',
+            background: '#1a1a1a',
+            color: '#f5f0eb',
+            confirmButtonColor: '#D6B9A6',
+            cancelButtonColor: '#444',
+            customClass: {
+                popup: 'swal-dark-popup'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Remove all order rows from the table
+                const tbody = document.getElementById('orders-tbody');
+                if (tbody) {
+                    tbody.innerHTML = '';
+                }
+
+                // Hide the table wrapper
+                const tableWrapper = document.getElementById('orders-table-wrapper');
+                if (tableWrapper) {
+                    tableWrapper.style.display = 'none';
+                }
+
+                // Show the empty-state box (re-create it if it was removed)
+                let emptyBox = document.getElementById('empty-orders-box');
+                if (emptyBox) {
+                    emptyBox.style.display = '';
+                } else {
+                    const container = document.querySelector('.orders-container');
+                    const emptyHTML = `
+                        <div class="empty-orders" id="empty-orders-box">
+                            <i class="fa-regular fa-clipboard"></i>
+                            <p>No bookings received yet.</p>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', emptyHTML);
+                }
+
+                Swal.fire({
+                    title: 'Dashboard Cleared',
+                    text: 'The dashboard view has been refreshed. New orders will appear in real-time.',
+                    icon: 'success',
+                    timer: 2500,
+                    showConfirmButton: false,
+                    background: '#1a1a1a',
+                    color: '#f5f0eb',
+                });
+            }
+        });
+    }
 </script>

@@ -190,7 +190,7 @@ module.exports.postConfirm = async (req, res) => {
       const payload = JSON.stringify({
         title: `New Appointment Booked - ${shop.name}`,
         body: `Customer ${customer.username} booked an appointment for ${servicesList} on ${new Date(bookingData.date).toLocaleDateString()} at ${startTime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}.`,
-        icon: '/images/icon.png',
+        icon: '/Assets/logo.png',
         data: { url: `/admin/orders` }
       });
       await webPush.sendNotification(owner.pushSubscription, payload)
@@ -314,7 +314,7 @@ module.exports.updateOrderStatus = async (req, res) => {
         const payload = JSON.stringify({
           title: `Order Status Update - ${appointment.shop.name}`,
           body: `Your appointment @${appointment.shop.name} has been "${status}".`,
-          icon: '/images/icon.png', // Ensure you have an icon in your public folder
+          icon: '/Assets/logo.png', // Ensure you have an icon in your public folder
           data: {
             url: `/user/appointments`
           }
